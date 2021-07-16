@@ -12,16 +12,33 @@ import java.sql.Statement;
  * @author Chris Marston
  *
  */
+public class DBConnection {
+	
+	public Connection connection;
 
-public class ConnectToDB {
+	public void main(String[] args) {
+		
+//		connectToDatabase(); // TODO Don't leave this here - delete it
+//		printTableDataToConsole(); // TODO Don't leave this here - delete it
 
-	public static void main(String[] args) {
+	}
+	
+	public void connectToDatabase() {
+		
 		String jdbcURL = "jdbc:sqlite:/C:\\Users\\chris\\eclipse-workspace\\JFXBudget\\Databases\\Dummy.db"; // This is the directory of the database - if this doesn't work, try the directory to the sqlite3.exe (C:\sqlite3) - removing the "/" befor the ":C" may also help
 		
 		try {
 			// 1) Access this database
-			Connection connection = DriverManager.getConnection(jdbcURL); // This connects our program to the database (I think this means that it reads the data in?) - Must be surrounded by a try-catch block
+			connection = DriverManager.getConnection(jdbcURL); // This connects our program to the database (I think this means that it reads the data in?) - Must be surrounded by a try-catch block
 			
+		} catch (SQLException e) {
+			System.out.println("Failed to connect to database.");
+		}
+	}
+	
+	public void printTableDataToConsole() {
+		
+		try {
 			// 2) Select all rows from the table...
 			String sql = "SELECT * FROM Transactions";
 			
@@ -43,13 +60,10 @@ public class ConnectToDB {
 				String Amount = result.getString("Amount");
 				
 				System.out.println(ID + " | " + Date + " | " + Payee + " | " + Category + " | " + Note + " | " + Amount);
-				
 			}
-			
-		} catch (SQLException e) {
-			System.out.println("Failed to connect to database.");
+		} catch (Exception e) {
+			System.out.println("Failed to print data to console");
 		}
-
 	}
 
 }

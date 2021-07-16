@@ -24,10 +24,6 @@
     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="85.0" prefHeight="332.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="31.0" prefWidth="146.0" text="Budget" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="31.0" prefWidth="146.0" text="Stats" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-      <ListView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3" />
       <ListView prefHeight="298.0" prefWidth="292.0" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
       <MenuButton mnemonicParsing="false" prefHeight="31.0" prefWidth="115.0" text="MenuButton" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
         <items>
@@ -37,5 +33,21 @@
       </MenuButton>
       <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="142.0" text="To Budget" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
       <Label prefHeight="33.0" prefWidth="141.0" text="Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <GridPane GridPane.rowSpan="4">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="76.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="128.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="128.0" minHeight="0.0" prefHeight="36.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="334.0" minHeight="10.0" prefHeight="334.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Button" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="Button" GridPane.rowIndex="2" />
+            <ImageView fitHeight="26.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </GridPane>
    </children>
 </GridPane>

@@ -31,7 +31,7 @@
       </ScrollPane>
       <ScrollPane layoutX="157.0" layoutY="115.0" prefHeight="284.0" prefWidth="442.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="286.0" prefWidth="442.0" scaleShape="false" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="286.0" prefWidth="442.0" />
         </content>
       </ScrollPane>
    </children>

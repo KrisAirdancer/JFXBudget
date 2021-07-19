@@ -9,8 +9,12 @@ import javafx.scene.layout.BorderPane;
 
 
 public class Main extends Application {
+	
+	DBConnection connection;
+	
 	@Override
 	public void start(Stage primaryStage) {
+		
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
 			Scene scene = new Scene(root);
@@ -20,9 +24,12 @@ public class Main extends Application {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		
+				
 	}
 	
 	public static void main(String[] args) {
+		
 		launch(args);
 	}
 }

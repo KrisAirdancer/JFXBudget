@@ -18,12 +18,17 @@ import application.DBConnection; // TODO I don't think this is doing anything - 
 
 public class Controller {
 	
-	DBConnection databaseConnection;
-	Connection connection;
-	public ObservableList<Transaction> transactions = FXCollections.observableArrayList(); // A list in which to store transactions
-	public TableView<Transaction> transactionsTable;
-	TableColumn<Transaction, String> dateCol, payeeCol, categoryCol, noteCol;
-	TableColumn<Transaction, Double> amountCol;
+//	@FXML
+	
+	private DBConnection databaseConnection;
+	private Connection connection;
+	public ObservableList<Transaction> transactions = FXCollections.observableArrayList(); // A list in which to store transactions // TODO This should be private or protected - fix it
+	public TableView<Transaction> transactionsTable; // TODO This should be private or protected - fix it
+	public TableColumn<Transaction, String> dateCol; // TODO This should be private or protected - fix it
+	public TableColumn<Transaction, String> payeeCol; // TODO This should be private or protected - fix it
+	public TableColumn<Transaction, String> categoryCol; // TODO This should be private or protected - fix it
+	public TableColumn<Transaction, String> noteCol; // TODO This should be private or protected - fix it
+	public TableColumn<Transaction, Double> amountCol; // TODO This should be private or protected - fix it
 
 	public Controller() {
 		

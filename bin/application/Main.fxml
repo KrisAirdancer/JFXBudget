@@ -49,10 +49,11 @@
          <content>
             <TableView fx:id="transactionsTable">
               <columns>
-                <TableColumn prefWidth="75.0" text="Date" />
-                <TableColumn prefWidth="75.0" text="Payee" />
-                  <TableColumn prefWidth="75.0" text="Category" />
-                  <TableColumn fx:id="noteCol" prefWidth="75.0" text="Note" />
+                <TableColumn minWidth="80.0" prefWidth="-1.0" text="Date" />
+                <TableColumn minWidth="80.0" prefWidth="-1.0" text="Payee" />
+                  <TableColumn minWidth="80.0" prefWidth="-1.0" text="Category" />
+                  <TableColumn fx:id="noteCol" minWidth="80.0" prefWidth="-1.0" text="Note" />
+                  <TableColumn fx:id="amountCol" minWidth="80.0" prefWidth="-1.0" text="Amount" />
               </columns>
             </TableView>
          </content>

@@ -3,7 +3,10 @@ package application;
 public class Transaction {
 
 	int id;
-	String date, payee, category, note;
+	String date;
+	String payee;
+	String category;
+	String note;
 	double amount;
 	
 	public Transaction(int id, String date, String payee, String category, String note, double amount) {
@@ -60,6 +63,10 @@ public class Transaction {
 		this.amount = amount;
 	}
 	
+	@Override
+	public String toString() {
+		return ("[id: " + id + ", date: " + date + ", payee: " + payee + ", category: " + category + ", note: " + note + ", amount: " + amount + "]");
+	}
 	
 
 }

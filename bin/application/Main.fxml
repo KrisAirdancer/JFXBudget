@@ -47,10 +47,12 @@
       </ScrollPane>
       <ScrollPane GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
          <content>
-            <TableView>
+            <TableView fx:id="transactionsTable">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn prefWidth="75.0" text="Date" />
+                <TableColumn prefWidth="75.0" text="Payee" />
+                  <TableColumn prefWidth="75.0" text="Category" />
+                  <TableColumn fx:id="noteCol" prefWidth="75.0" text="Note" />
               </columns>
             </TableView>
          </content>

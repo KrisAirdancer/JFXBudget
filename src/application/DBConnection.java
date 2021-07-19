@@ -26,6 +26,8 @@ public class DBConnection {
 	
 	public DBConnection() {
 		
+		connectToDatabase();
+		
 	}
 	
 	/**

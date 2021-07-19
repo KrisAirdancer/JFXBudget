@@ -13,12 +13,13 @@ import javafx.scene.shape.Circle;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Arrays;
 
 import application.DBConnection; // TODO I don't think this is doing anything - delete it
 
 public class Controller {
 	
-//	@FXML
+	@FXML
 	
 	private DBConnection databaseConnection;
 	private Connection connection;
@@ -75,23 +76,38 @@ public class Controller {
 		// Initialize the TableView
 		transactionsTable = new TableView<Transaction>();
 		
-		// Add the data model to the TableView - in this case, the transactions ObservableList
-		transactionsTable.setItems(transactions);
-		
-		// Create TableColumn objects to display the data. Note: The unique id is intentionally not displayed.
+		// Initialize TableColumn objects to display the data. Note: The unique id is intentionally not displayed.
 		dateCol = new TableColumn<Transaction, String>("Date");
-		dateCol.setCellValueFactory(new PropertyValueFactory("Date"));
 		payeeCol = new TableColumn<Transaction, String>("Payee");
-		payeeCol.setCellValueFactory(new PropertyValueFactory("Payee"));
 		categoryCol = new TableColumn<Transaction, String>("Category");
-		categoryCol.setCellValueFactory(new PropertyValueFactory("Category"));
 		noteCol = new TableColumn<Transaction, String>("Note");
-		noteCol.setCellValueFactory(new PropertyValueFactory("Note"));
 		amountCol = new TableColumn<Transaction, Double>("Amount");
-		amountCol.setCellValueFactory(new PropertyValueFactory("Amount"));
 		
-		// Add the TableColumns to the TableView
-		transactionsTable.getColumns().setAll(dateCol, payeeCol, categoryCol, noteCol, amountCol);
+		// Read in transactions from the database
+		readInTransactions();
+		
+		// OLD LOCATION OF SETITEMS CALL
+	
+		// OLD LOCATION OF TABLECOLUMN OBJECTS INITIALIZATION
+		
+		// Populate the cells in the TabelColumns
+		dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("date"));
+		payeeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("payee"));
+		categoryCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("category"));
+		noteCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("note"));
+		amountCol.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("amount"));
+
+		// Adding TableColumns to the TableView
+		transactionsTable.setItems(transactions); // Add the data model to the TableView - in this case, the transactions ObservableList
+		
+		transactionsTable.getColumns().addAll(dateCol, payeeCol, categoryCol, noteCol, amountCol);
+		
+		System.out.println("Columns: " + transactionsTable.getColumns());
+		
+		
+		
+		
+		
 		
 		// TODO Have this method return the TableView?
 	}
@@ -101,36 +117,34 @@ public class Controller {
 		try {
 			// Setting SQL query
 			String query = "SELECT * FROM Transactions";
-			
+
 			// Create a Statement object to execute the SQL query
 			Statement statement = connection.createStatement();
-			
+
 			// Execute SQL query and store the results in a ResultSet object
 			ResultSet result = statement.executeQuery(query);
-			
+
 			// Create Transaction object(s)
 			while (result.next()) {
-				
+
 				int id = Integer.parseInt(result.getString("Transaction ID"));
 				String date = result.getString("Date");
 				String payee = result.getString("Payee");
 				String category = result.getString("Category");
 				String note = result.getString("Note");
 				double amount = Double.parseDouble(result.getString("Amount"));
-				
+
 				Transaction trans = new Transaction(id, date, payee, category, note, amount);
-				
+
 				transactions.add(trans);
+				System.out.println("transactions: " + Arrays.toString(transactions.toArray()));
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to create Transaction object(s) from database.");
+			e.printStackTrace();
 		}
 		
 		
-	}
-	
-	public void main(String[] args) {
-
 	}
 
 }

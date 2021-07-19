@@ -26,7 +26,6 @@ public class DBConnection {
 	
 	public DBConnection() {
 		
-		createTransactionsTableView(); // Creating a TableVeiw to display user's transactions
 	}
 	
 	/**
@@ -77,75 +76,10 @@ public class DBConnection {
 			System.out.println("Failed to print data to console");
 		}
 	}
-
-	public void createTransactionsTableView() {
-		
-		// CC - Create a Transaction class
-			// CC - Should have instance variables for each property of a transaction
-			// CC - Should have getters/setters for proper encapsulation
-		// CC - Create a readInTransactions() method to initialize Transactions objects from the read-in data
-		// CC - Follow the steps in this link to set up the TableView https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html
-		// Figure out how to connect the newly created TableView to the one in the UI
-		// Write documentation (JavaDocs) for all written code!!!!
-		
-		// Initialize the TableView
-		transactionsTable = new TableView<Transaction>();
-		
-		// Add the data model to the TableView - in this case, the transactions ObservableList
-		transactionsTable.setItems(transactions);
-		
-		// Create TableColumn objects to display the data. Note: The unique id is intentionally not displayed.
-		TableColumn<Transaction, String> dateCol = new TableColumn<Transaction, String>("Date");
-		dateCol.setCellValueFactory(new PropertyValueFactory("Date"));
-		TableColumn<Transaction, String> payeeCol = new TableColumn<Transaction, String>("Payee");
-		payeeCol.setCellValueFactory(new PropertyValueFactory("Payee"));
-		TableColumn<Transaction, String> categoryCol = new TableColumn<Transaction, String>("Category");
-		categoryCol.setCellValueFactory(new PropertyValueFactory("Category"));
-		TableColumn<Transaction, String> noteCol = new TableColumn<Transaction, String>("Note");
-		noteCol.setCellValueFactory(new PropertyValueFactory("Note"));
-		TableColumn<Transaction, Double> amountCol = new TableColumn<Transaction, Double>("Amount");
-		amountCol.setCellValueFactory(new PropertyValueFactory("Amount"));
-		
-		// Add the TableColumns to the TableView
-		transactionsTable.getColumns().setAll(dateCol, payeeCol, categoryCol, noteCol, amountCol);
-		
-		// TODO Have this method return the TableView?
-	}
 	
-	public void readInTransactions() {
-		
-		try {
-			// Setting SQL query
-			String query = "SELECT * FROM Transactions";
-			
-			// Create a Statement object to execute the SQL query
-			Statement statement = connection.createStatement();
-			
-			// Execute SQL query and store the results in a ResultSet object
-			ResultSet result = statement.executeQuery(query);
-			
-			// Create Transaction object(s)
-			while (result.next()) {
-				
-				int id = Integer.parseInt(result.getString("Transaction ID"));
-				String date = result.getString("Date");
-				String payee = result.getString("Payee");
-				String category = result.getString("Category");
-				String note = result.getString("Note");
-				double amount = Double.parseDouble(result.getString("Amount"));
-				
-				Transaction trans = new Transaction(id, date, payee, category, note, amount);
-				
-				transactions.add(trans);
-			}
-		} catch (Exception e) {
-			System.out.println("Failed to create Transaction object(s) from database.");
-		}
-		
-		
-	}
-	
-	public void main(String[] args) {
+	public Connection getConnection() {
 
+		return connection;
 	}
+
 }

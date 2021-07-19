@@ -49,8 +49,8 @@
          <content>
             <TableView>
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="dateCol" prefWidth="75.0" text="Date" />
+                <TableColumn fx:id="payeeCol" prefWidth="75.0" text="Payee" />
               </columns>
             </TableView>
          </content>

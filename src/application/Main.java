@@ -10,16 +10,10 @@ import javafx.scene.layout.BorderPane;
 
 public class Main extends Application {
 	
-	// This line is a test
-//	DBConnection connection;
+	DBConnection connection;
 	
 	@Override
 	public void start(Stage primaryStage) {
-		
-		// These lines are a test
-//		connection = new DBConnection();
-//		connection.connectToDatabase();
-//		connection.printTableDataToConsole();
 		
 		try {
 			Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
@@ -31,16 +25,10 @@ public class Main extends Application {
 			e.printStackTrace();
 		}
 		
+				
 	}
 	
 	public static void main(String[] args) {
-		// These lines are a test
-//		DBConnection connection = new DBConnection();
-//		connection.connectToDatabase();
-//		connection.printTableDataToConsole();
-		
-		// These lines are a separate test
-		
 		
 		launch(args);
 	}

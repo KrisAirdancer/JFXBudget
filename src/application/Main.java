@@ -50,7 +50,7 @@ public class Main extends Application {
 		table.getColumns().addAll(nameColumn, priceColumn, quantityColumn);
 		
 		
-		// Create our layout
+		// Create our layout 
 		VBox vBox = new VBox();
 		// Add the table to the layout
 		vBox.getChildren().addAll(table);

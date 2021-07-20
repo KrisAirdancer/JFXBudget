@@ -13,7 +13,7 @@ import java.sql.Statement;
  *
  */
 
-public class ConnectToDB {
+public class DBConnection {
 
 	public static void main(String[] args) {
 		String jdbcURL = "jdbc:sqlite:/C:\\Users\\chris\\eclipse-workspace\\JFXBudget\\Databases\\Dummy.db"; // This is the directory of the database - if this doesn't work, try the directory to the sqlite3.exe (C:\sqlite3) - removing the "/" befor the ":C" may also help

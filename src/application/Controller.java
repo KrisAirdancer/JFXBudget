@@ -24,15 +24,13 @@ public class Controller implements Initializable {
 	
 	private Connection connection;
 	
-	@FXML
-	private Button testButton;
-	
-	@FXML
 	private ObservableList<Transaction> transactions;
 	
 	@FXML
 	private TableView<Transaction> transactionsTable;
 	
+	@FXML
+	public TableColumn<Transaction, Integer> idCol;
 	@FXML
 	public TableColumn<Transaction, String> dateCol;
 	@FXML
@@ -44,6 +42,9 @@ public class Controller implements Initializable {
 	@FXML
 	public TableColumn<Transaction, Double> amountCol;
 	
+	@FXML
+	private Button testButton;
+	
 	/**
 	 * Initializes data and other components of the UI/Backend on program launch (no user action required).
 	 */
@@ -53,6 +54,7 @@ public class Controller implements Initializable {
 		// Initialize necessary objects
 		transactions = FXCollections.observableArrayList();
 		transactionsTable = new TableView<Transaction>();
+		idCol = new TableColumn<Transaction, Integer>();
 		dateCol = new TableColumn<Transaction, String>();
 		payeeCol = new TableColumn<Transaction, String>();
 		categoryCol = new TableColumn<Transaction, String>();
@@ -65,10 +67,11 @@ public class Controller implements Initializable {
 		// Read transactions data from database and store it in the ObservableList
 		readInTransactions();
 		
-		// TEST: Print the contents of the table to the console. TODO Delete this test code
+		// TEST: Print the contents of the table to the console to ensure that data was read in properly. TODO Delete this test code
 		printTableDataToConsole();
 		
 		// Connect the data (objects - Product) to the TableColumns
+		idCol.setCellValueFactory(new PropertyValueFactory<Transaction, Integer>("id"));
 		dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("date")); // The last parameter here - in this case "date" - must match the variable "date" in the Trasaction class exactly.
 		payeeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("payee"));
 		categoryCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("category"));

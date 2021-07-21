@@ -14,12 +14,6 @@ public class Transaction {
 	private SimpleStringProperty note;
 	private SimpleDoubleProperty amount;
 	
-	// First constructor to initialize instance variables
-	public Transaction () { // This constructor sets default values
-		// TODO Use this space to set the values to a default value, such as 0 or "EMPTY" or "UNKNOWN"
-		
-	}
-	
 	// Second constructor to initialize instance variables to desired values
 	// The two constructors are overloaded
 	public Transaction(int id, String date, String payee, String category, String note, double amount) {

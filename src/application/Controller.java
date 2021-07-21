@@ -45,6 +45,9 @@ public class Controller implements Initializable {
 	@FXML
 	private Button testButton;
 	
+	@FXML
+	private Button dataLoadTest;
+	
 	/**
 	 * Initializes data and other components of the UI/Backend on program launch (no user action required).
 	 */

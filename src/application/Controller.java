@@ -1,117 +1,115 @@
 package application;
 
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.util.*;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Circle;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Arrays;
-
-import application.DBConnection; // TODO I don't think this is doing anything - delete it
-
-public class Controller {
+public class Controller implements Initializable {
+	
+	private Connection connection;
+	
+	private ObservableList<Transaction> transactions;
 	
 	@FXML
+	private TableView<Transaction> transactionsTable;
 	
-	private DBConnection databaseConnection;
-	private Connection connection;
-	public ObservableList<Transaction> transactions = FXCollections.observableArrayList(); // A list in which to store transactions // TODO This should be private or protected - fix it
-	public TableView<Transaction> transactionsTable; // TODO This should be private or protected - fix it
-	public TableColumn<Transaction, String> dateCol; // TODO This should be private or protected - fix it
-	public TableColumn<Transaction, String> payeeCol; // TODO This should be private or protected - fix it
-	public TableColumn<Transaction, String> categoryCol; // TODO This should be private or protected - fix it
-	public TableColumn<Transaction, String> noteCol; // TODO This should be private or protected - fix it
-	public TableColumn<Transaction, Double> amountCol; // TODO This should be private or protected - fix it
-
-	public Controller() {
-		
-		// These lines are a test
-		databaseConnection = new DBConnection();
-//		connection.connectToDatabase();
-//		connection.printTableDataToConsole();
-		
-		// Get connection object from DBConnection class
-		connection = databaseConnection.getConnection();
-		
-		// Creating a TableVeiw to display user's transactions
-		createTransactionsTableView(); 
-	}
-
-	public void budgetButton(ActionEvent e) {
-		System.out.println("Budget");
-		
-		// This is a test
-		databaseConnection.connectToDatabase();
-		databaseConnection.printTableDataToConsole();
-		
-//		myCircle.setCenterY(y = y - 1);
-	}
+	@FXML
+	public TableColumn<Transaction, Integer> idCol;
+	@FXML
+	public TableColumn<Transaction, String> dateCol;
+	@FXML
+	public TableColumn<Transaction, String> payeeCol;
+	@FXML
+	public TableColumn<Transaction, String> categoryCol;
+	@FXML
+	public TableColumn<Transaction, String> noteCol;
+	@FXML
+	public TableColumn<Transaction, Double> amountCol;
 	
-	public void statsButton(ActionEvent e) {
-		System.out.println("Stats");
-	}
+	@FXML
+	private Button testButton;
 	
-	public void toBudgetButton(ActionEvent e) {
-		System.out.println("To Budget");
-	}
-	
-	public void createTransactionsTableView() {
+	/**
+	 * Initializes data and other components of the UI/Backend on program launch (no user action required).
+	 */
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		// CC - Create a Transaction class
-			// CC - Should have instance variables for each property of a transaction
-			// CC - Should have getters/setters for proper encapsulation
-		// CC - Create a readInTransactions() method to initialize Transactions objects from the read-in data
-		// CC - Follow the steps in this link to set up the TableView https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/TableView.html
-		// Figure out how to connect the newly created TableView to the one in the UI
-		// Write documentation (JavaDocs) for all written code!!!!
+		// Initialize necessary objects
+		transactions = FXCollections.observableArrayList();
+//		transactionsTable = new TableView<Transaction>();
+//		idCol = new TableColumn<Transaction, Integer>();
+//		dateCol = new TableColumn<Transaction, String>();
+//		payeeCol = new TableColumn<Transaction, String>();
+//		categoryCol = new TableColumn<Transaction, String>();
+//		noteCol = new TableColumn<Transaction, String>();
+//		amountCol = new TableColumn<Transaction, Double>();
 		
-		// Initialize the TableView
-		transactionsTable = new TableView<Transaction>();
+		// Establish connection to database
+		connectToDatabase();
 		
-		// Initialize TableColumn objects to display the data. Note: The unique id is intentionally not displayed.
-		dateCol = new TableColumn<Transaction, String>("Date");
-		payeeCol = new TableColumn<Transaction, String>("Payee");
-		categoryCol = new TableColumn<Transaction, String>("Category");
-		noteCol = new TableColumn<Transaction, String>("Note");
-		amountCol = new TableColumn<Transaction, Double>("Amount");
-		
-		// Read in transactions from the database
+		// Read transactions data from database and store it in the ObservableList
 		readInTransactions();
 		
-		// OLD LOCATION OF SETITEMS CALL
-	
-		// OLD LOCATION OF TABLECOLUMN OBJECTS INITIALIZATION
+		// TEST: Print the contents of the table to the console to ensure that data was read in properly. TODO Delete this test code
+		printTableDataToConsole();
 		
-		// Populate the cells in the TabelColumns
-		dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("date"));
+		// Connect the data (objects - Product) to the TableColumns
+		idCol.setCellValueFactory(new PropertyValueFactory<Transaction, Integer>("id"));
+		dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("date")); // The last parameter here - in this case "date" - must match the variable "date" in the Trasaction class exactly.
 		payeeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("payee"));
 		categoryCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("category"));
 		noteCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("note"));
 		amountCol.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("amount"));
-
-		// Adding TableColumns to the TableView
-		transactionsTable.setItems(transactions); // Add the data model to the TableView - in this case, the transactions ObservableList
 		
-		transactionsTable.getColumns().addAll(dateCol, payeeCol, categoryCol, noteCol, amountCol);
+		// Load data into the table
+		transactionsTable.setItems(transactions);
 		
-		System.out.println("Columns: " + transactionsTable.getColumns());
-		
+		// Add columns to the table - TODO The warning here states that a Generic Array is created. I may want to make my own array, populate it, and then assign it to the TableView object so that Java doesn't have to make one itself.
+//		transactionsTable.getColumns().addAll(dateCol, payeeCol, categoryCol, noteCol, amountCol);
 		
 		
+		System.out.println(transactionsTable.getColumns());
 		
+		System.out.println("Initialization complete.");
+	}	
+	
+	/**
+	 * Connects the program to the Dummy.db database.
+	 */
+	public void connectToDatabase() {
 		
+		String jdbcURL = "jdbc:sqlite:/C:\\Users\\chris\\eclipse-workspace\\JFXBudget\\Databases\\Dummy.db"; // This is the directory of the database - if this doesn't work, try the directory to the sqlite3.exe (C:\sqlite3) - removing the "/" befor the ":C" may also help
 		
-		// TODO Have this method return the TableView?
+		try {
+			// 1) Access this database
+			connection = DriverManager.getConnection(jdbcURL); // This connects our program to the database (I think this means that it reads the data in?) - Must be surrounded by a try-catch block
+			
+		} catch (SQLException e) {
+			System.out.println("Failed to connect to database.");
+		}
 	}
 	
+	/**
+	 * Reads data in from the database, initializes transaction objects with the data, and'
+	 * stores the data in an ObservableList.
+	 */
 	public void readInTransactions() {
 		
 		try {
@@ -127,17 +125,16 @@ public class Controller {
 			// Create Transaction object(s)
 			while (result.next()) {
 
-				int id = Integer.parseInt(result.getString("Transaction ID"));
+				int id = result.getInt("Transaction ID");
 				String date = result.getString("Date");
 				String payee = result.getString("Payee");
 				String category = result.getString("Category");
 				String note = result.getString("Note");
-				double amount = Double.parseDouble(result.getString("Amount"));
+				double amount = result.getDouble("Amount");
 
 				Transaction trans = new Transaction(id, date, payee, category, note, amount);
 
 				transactions.add(trans);
-				System.out.println("transactions: " + Arrays.toString(transactions.toArray()));
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to create Transaction object(s) from database.");
@@ -145,6 +142,49 @@ public class Controller {
 		}
 		
 		
+	}
+	
+	/**
+	 * Prints the contents of the database to the console.
+	 */
+	public void printTableDataToConsole() {
+		
+		try {
+			// 2) Select all rows from the table...
+			String sql = "SELECT * FROM Transactions";
+			
+			// 3) ???
+			Statement statement = connection.createStatement();
+			
+			// 4) ???
+			ResultSet result = statement.executeQuery(sql);
+			
+			// 5) Print the data pulled from the database
+			while (result.next()) {
+				// Time Stamp: 11:59 https://www.youtube.com/watch?v=293M9-QRZ0c&ab_channel=CodeJava
+				
+				String ID = result.getString("Transaction ID");
+				String Date = result.getString("Date");
+				String Payee = result.getString("Payee");
+				String Category = result.getString("Category");
+				String Note = result.getString("Note");
+				String Amount = result.getString("Amount");
+				
+				System.out.println(ID + " | " + Date + " | " + Payee + " | " + Category + " | " + Note + " | " + Amount);
+			}
+		} catch (Exception e) {
+			System.out.println("Failed to print data to console");
+		}
+	}
+	
+	
+	
+/**
+ * Controls the test button. Test button makes sure UI can still communicate with .fxml and Controller files.
+ */
+	public void testMethod() {
+		System.out.println("Test successful!");
+		testButton.setText("Test successful!");
 	}
 
 }

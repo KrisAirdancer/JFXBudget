@@ -1,4 +1,4 @@
-package application;
+package deleteableExtras;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

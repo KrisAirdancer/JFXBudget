@@ -1,14 +1,18 @@
 package application;
 
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public class Transaction {
     
 	// Each of these variables will become a column in our TableView
-	private int id;
-	private String date;
-	private String payee;
-	private String category;
-	private String note;
-	private double amount;
+	private SimpleIntegerProperty id;
+	private SimpleStringProperty date;
+	private SimpleStringProperty payee;
+	private SimpleStringProperty category;
+	private SimpleStringProperty note;
+	private SimpleDoubleProperty amount;
 	
 	// First constructor to initialize instance variables
 	public Transaction () { // This constructor sets default values
@@ -19,14 +23,14 @@ public class Transaction {
 	// Second constructor to initialize instance variables to desired values
 	// The two constructors are overloaded
 	public Transaction(int id, String date, String payee, String category, String note, double amount) {
-		this.id = id;
-		this.date = date;
-		this.payee = payee;
-		this.category = category;
-		this.note = note;
-		this.amount = amount;
+		this.id = new SimpleIntegerProperty(id);
+		this.date = new SimpleStringProperty(date);
+		this.payee = new SimpleStringProperty(payee);
+		this.category = new SimpleStringProperty(category);
+		this.note = new SimpleStringProperty(note);
+		this.amount = new SimpleDoubleProperty(amount);
 	}
-	
+
 	/*
 	 * JavaFX tables will look for (behind the scenes) getters and setters for the 
 	 * table values. The naming convention get"PropertyName" must be followed.
@@ -34,48 +38,50 @@ public class Transaction {
 	 * 
 	 * Note: id intentionally left unaccessible - id is should NOT be changeable
 	 */
-	public int getID() {
+	public SimpleIntegerProperty getId() {
 		return id;
 	}
-	public String getDate() {
+
+	public SimpleStringProperty getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(SimpleStringProperty date) {
 		this.date = date;
 	}
 
-	public String getPayee() {
+	public SimpleStringProperty getPayee() {
 		return payee;
 	}
 
-	public void setPayee(String payee) {
+	public void setPayee(SimpleStringProperty payee) {
 		this.payee = payee;
 	}
 
-	public String getCategory() {
+	public SimpleStringProperty getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(SimpleStringProperty category) {
 		this.category = category;
 	}
 
-	public String getNote() {
+	public SimpleStringProperty getNote() {
 		return note;
 	}
 
-	public void setNote(String note) {
+	public void setNote(SimpleStringProperty note) {
 		this.note = note;
 	}
 
-	public double getAmount() {
+	public SimpleDoubleProperty getAmount() {
 		return amount;
 	}
 
-	public void setAmount(double amount) {
+	public void setAmount(SimpleDoubleProperty amount) {
 		this.amount = amount;
 	}
+	
 
 	
 	

@@ -7,6 +7,11 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/**
+ * See this on how to properly set up the Property object types in this class: https://docs.oracle.com/javafx/2/binding/jfxpub-binding.htm
+ * @author Chris Marston
+ *
+ */
 public class Transaction {
     
 	// Each of these variables will become a column in our TableView

@@ -20,7 +20,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Circle;
 
-public class Controller implements Initializable {
+public class CategoriesTableController implements Initializable {
 	
 	private Connection connection;
 	

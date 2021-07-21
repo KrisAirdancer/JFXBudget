@@ -8,8 +8,9 @@
 
 <VBox xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.Controller">
    <children>
-      <TableView fx:id="table">
+      <TableView fx:id="transactionsTable">
         <columns>
+            <TableColumn fx:id="idCol" prefWidth="75.0" text="ID" />
           <TableColumn fx:id="dateCol" prefWidth="75.0" text="Date" />
           <TableColumn fx:id="payeeCol" prefWidth="75.0" text="Pyaee" />
             <TableColumn fx:id="categoryCol" prefWidth="75.0" text="Category" />

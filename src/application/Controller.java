@@ -53,13 +53,13 @@ public class Controller implements Initializable {
 		
 		// Initialize necessary objects
 		transactions = FXCollections.observableArrayList();
-		transactionsTable = new TableView<Transaction>();
-		idCol = new TableColumn<Transaction, Integer>();
-		dateCol = new TableColumn<Transaction, String>();
-		payeeCol = new TableColumn<Transaction, String>();
-		categoryCol = new TableColumn<Transaction, String>();
-		noteCol = new TableColumn<Transaction, String>();
-		amountCol = new TableColumn<Transaction, Double>();
+//		transactionsTable = new TableView<Transaction>();
+//		idCol = new TableColumn<Transaction, Integer>();
+//		dateCol = new TableColumn<Transaction, String>();
+//		payeeCol = new TableColumn<Transaction, String>();
+//		categoryCol = new TableColumn<Transaction, String>();
+//		noteCol = new TableColumn<Transaction, String>();
+//		amountCol = new TableColumn<Transaction, Double>();
 		
 		// Establish connection to database
 		connectToDatabase();
@@ -82,7 +82,7 @@ public class Controller implements Initializable {
 		transactionsTable.setItems(transactions);
 		
 		// Add columns to the table - TODO The warning here states that a Generic Array is created. I may want to make my own array, populate it, and then assign it to the TableView object so that Java doesn't have to make one itself.
-		transactionsTable.getColumns().addAll(dateCol, payeeCol, categoryCol, noteCol, amountCol);
+//		transactionsTable.getColumns().addAll(dateCol, payeeCol, categoryCol, noteCol, amountCol);
 		
 		
 		System.out.println(transactionsTable.getColumns());

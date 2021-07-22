@@ -31,7 +31,7 @@
           <MenuItem mnemonicParsing="false" text="Action 2" />
         </items>
       </MenuButton>
-      <Button fx:id="testButton" mnemonicParsing="false" onAction="#testMethod" prefHeight="29.0" prefWidth="142.0" text="To Budget" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="142.0" text="To Budget" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
       <Label prefHeight="33.0" prefWidth="141.0" text="Label" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
       <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Budget" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
       <Button mnemonicParsing="false" prefHeight="15.0" prefWidth="100.0" text="Stats" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
@@ -49,7 +49,6 @@
          <content>
             <TableView fx:id="transactionsTable">
               <columns>
-                <TableColumn fx:id="idCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="ID" />
                 <TableColumn fx:id="dateCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Date" />
                   <TableColumn fx:id="payeeCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Payee" />
                   <TableColumn fx:id="categoryCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Category" />
@@ -60,5 +59,6 @@
          </content>
       </ScrollPane>
       <Button fx:id="dataLoadTest" mnemonicParsing="false" onAction="#printTableDataToConsole" prefHeight="25.0" prefWidth="100.0" text="Data Load Test" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Button fx:id="testButton" layoutX="287.0" layoutY="28.0" mnemonicParsing="false" onAction="#testMethod" prefHeight="29.0" prefWidth="142.0" text="FXML Comm Test" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
    </children>
 </GridPane>

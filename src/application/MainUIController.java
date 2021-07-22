@@ -20,26 +20,41 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Circle;
 
-public class CategoriesTableController implements Initializable {
+public class MainUIController implements Initializable {
 	
 	private DBConnection dbc;
 	
+	/************************
+	 * TRANSACTIONS VARIABLES
+	 ************************/
 	private ObservableList<Transaction> transactions;
-	// TODO I think I can consolidate all of my @FXML statements into one @FXML above all of the statements.
+	
 	@FXML
 	private TableView<Transaction> transactionsTable;
+	@FXML
+	private TableColumn<Transaction, String> dateCol;
+	@FXML
+	private TableColumn<Transaction, String> payeeCol;
+	@FXML
+	private TableColumn<Transaction, String> categoryCol;
+	@FXML
+	private TableColumn<Transaction, String> noteCol;
+	@FXML
+	private TableColumn<Transaction, Double> amountCol;
 	
+	/********************
+	 * ACCOUNTS VARIABLES
+	 ********************/
 	@FXML
-	public TableColumn<Transaction, String> dateCol;
+	private TableView<Account> accountsTable;
 	@FXML
-	public TableColumn<Transaction, String> payeeCol;
+	public TableColumn<Account, String> nameCol;
 	@FXML
-	public TableColumn<Transaction, String> categoryCol;
-	@FXML
-	public TableColumn<Transaction, String> noteCol;
-	@FXML
-	public TableColumn<Transaction, Double> amountCol;
+	public TableColumn<Account, Double> balanceCol;
 	
+	/*******************
+	 * TESTING VARIABLES
+	 *******************/
 	@FXML
 	private Button testButton;
 	@FXML
@@ -51,9 +66,6 @@ public class CategoriesTableController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		
-		// Initialize necessary objects
-//		transactions = FXCollections.observableArrayList(); // DELETE
 		
 		// Initialize DBConnection object
 		dbc = new DBConnection();

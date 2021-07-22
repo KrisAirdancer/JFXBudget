@@ -24,13 +24,6 @@ public class Transaction {
 	
 	/**
 	 * Constructor class for the Transaction class.
-	 * 
-	 * @param id
-	 * @param date
-	 * @param payee
-	 * @param category
-	 * @param note
-	 * @param amount
 	 */
 	public Transaction(int id, String date, String payee, String category, String note, double amount) {
 		this.id = new SimpleIntegerProperty(id);

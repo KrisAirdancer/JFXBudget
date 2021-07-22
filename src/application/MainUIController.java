@@ -20,26 +20,43 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Circle;
 
-public class CategoriesTableController implements Initializable {
+public class MainUIController implements Initializable {
 	
 	private DBConnection dbc;
 	
+	/************************
+	 * TRANSACTIONS VARIABLES
+	 ************************/
 	private ObservableList<Transaction> transactions;
-	// TODO I think I can consolidate all of my @FXML statements into one @FXML above all of the statements.
+	
 	@FXML
 	private TableView<Transaction> transactionsTable;
+	@FXML
+	private TableColumn<Transaction, String> dateCol;
+	@FXML
+	private TableColumn<Transaction, String> payeeCol;
+	@FXML
+	private TableColumn<Transaction, String> categoryCol;
+	@FXML
+	private TableColumn<Transaction, String> noteCol;
+	@FXML
+	private TableColumn<Transaction, Double> amountCol;
+	
+	/********************
+	 * ACCOUNTS VARIABLES
+	 ********************/
+	ObservableList<Account> accounts;
 	
 	@FXML
-	public TableColumn<Transaction, String> dateCol;
+	private TableView<Account> accountsTable;
 	@FXML
-	public TableColumn<Transaction, String> payeeCol;
+	public TableColumn<Account, String> nameCol;
 	@FXML
-	public TableColumn<Transaction, String> categoryCol;
-	@FXML
-	public TableColumn<Transaction, String> noteCol;
-	@FXML
-	public TableColumn<Transaction, Double> amountCol;
+	public TableColumn<Account, Double> balanceCol;
 	
+	/*******************
+	 * TESTING VARIABLES
+	 *******************/
 	@FXML
 	private Button testButton;
 	@FXML
@@ -52,9 +69,6 @@ public class CategoriesTableController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		// Initialize necessary objects
-//		transactions = FXCollections.observableArrayList(); // DELETE
-		
 		// Initialize DBConnection object
 		dbc = new DBConnection();
 		
@@ -63,6 +77,10 @@ public class CategoriesTableController implements Initializable {
 		
 		// Read transactions data from database and store it in the ObservableList
 		transactions = dbc.readInTransactions(); 
+		
+		/*******************************
+		 * Set up Transactions TableView
+		 *******************************/
 		
 		// Connect the data (objects - Product) to the TableColumns
 		dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("date")); // The last parameter here - in this case "date" - must match the variable "date" in the Trasaction class exactly.
@@ -74,7 +92,18 @@ public class CategoriesTableController implements Initializable {
 		// Load data into the table
 		transactionsTable.setItems(transactions);
 		
+		/***************************
+		 * Set up Accounts TableView TODO
+		 ***************************/
+		
+		// 1. Populate accounts ObservableList - Call DBConnection method to do so
+		accounts = dbc.readInAccounts();
+		// 2. accountsTable.setItems(accounts);
+		
+		System.out.println("Transactions: " + transactions);
+		System.out.println("Accounts: " + accounts);
 		System.out.println("Initialization complete."); // TODO Delete this eventually
+		
 	}	
 
 	/**

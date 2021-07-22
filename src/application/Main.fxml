@@ -13,10 +13,10 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainUIController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="149.0" minWidth="10.0" percentWidth="16.0" prefWidth="149.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" percentWidth="28.0" prefWidth="152.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" percentWidth="28.0" prefWidth="152.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="458.0" minWidth="10.0" percentWidth="28.0" prefWidth="138.0" />
+    <ColumnConstraints hgrow="ALWAYS" minWidth="500.0" percentWidth="16.0" prefWidth="149.0" />
+    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="28.0" prefWidth="152.0" />
+      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="28.0" prefWidth="152.0" />
+      <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="28.0" prefWidth="138.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="5.0" prefHeight="68.0" vgrow="SOMETIMES" />
@@ -37,10 +37,10 @@
       <Button mnemonicParsing="false" prefHeight="15.0" prefWidth="100.0" text="Stats" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
       <ScrollPane GridPane.rowIndex="3">
          <content>
-            <TableView>
+            <TableView fx:id="accountsTable" minWidth="300.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="nameCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Name" />
+                <TableColumn fx:id="balanceCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Balance" />
               </columns>
             </TableView>
          </content>

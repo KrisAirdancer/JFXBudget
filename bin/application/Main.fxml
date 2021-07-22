@@ -58,7 +58,7 @@
             </TableView>
          </content>
       </ScrollPane>
-      <Button fx:id="dataLoadTest" mnemonicParsing="false" onAction="#printTableDataToConsole" prefHeight="25.0" prefWidth="100.0" text="Data Load Test" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Button fx:id="testButton" layoutX="287.0" layoutY="28.0" mnemonicParsing="false" onAction="#testMethod" prefHeight="29.0" prefWidth="142.0" text="FXML Comm Test" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Button fx:id="dataLoadTest" mnemonicParsing="false" onAction="#dataLoadTest" prefHeight="25.0" prefWidth="100.0" text="Data Load Test" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Button fx:id="testButton" layoutX="287.0" layoutY="28.0" mnemonicParsing="false" onAction="#commTest" prefHeight="29.0" prefWidth="142.0" text="FXML Comm Test" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
    </children>
 </GridPane>

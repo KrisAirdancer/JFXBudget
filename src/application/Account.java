@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -13,48 +17,36 @@ public class Account {
 
 	ObservableList<Transaction> transactions;
 	
+	private StringProperty name;
+	private DoubleProperty balance;
+	
 	public Account(String name, double balance) {
 		
-		// initialize stuff
+		// Initialize variables		
+		this.name = new SimpleStringProperty(name);
+		this.balance = new SimpleDoubleProperty(balance);
+		
+		// Initialize and populate ObservableList
+//		transactions = getTransactions
+		
 	}
 	
-	private void readInTransactions(){
-		
-		// Initialize ObservableList to house Transactions
-		transactions = FXCollections.observableArrayList();
-		
-		try {
-			// Setting SQL query
-			String query = "SELECT * FROM Transactions";
-
-			// Create a Statement object to execute the SQL query
-			Statement statement = connection.createStatement();
-
-			// Execute SQL query and store the results in a ResultSet object
-			ResultSet result = statement.executeQuery(query);
-
-			// Pull data from database and use it to populate Transaction object(s)
-			while (result.next()) {
-				// Pull all desired fields from the database
-				int id = result.getInt("Transaction ID");
-				String date = result.getString("Date");
-				String payee = result.getString("Payee");
-				String category = result.getString("Category");
-				String note = result.getString("Note");
-				double amount = result.getDouble("Amount");
-
-				// Create a Transaction object and populate it with data from the database
-				Transaction trans = new Transaction(id, date, payee, category, note, amount);
-				// Add the Transaction object to the transactions Observable List
-				transactions.add(trans);
-			}
-		} catch (Exception e) {
-			System.out.println("Failed to create Transaction object(s) from database.");
-			e.printStackTrace();
-		}
-		
+	/**
+	 * This method pulls the transactions associated with this account from the list of
+	 * transactions read in by the DBConnection class. 
+	 */
+	public void getTransactions() {
 		
 	}
+	
+    /**
+     * Returns a String representation of the Account object.
+     */
+    public String toString() {
+    	
+    	String stringAccount = "[" + name.get() + ", " + "$" + Double.toString(balance.get()) + "]"; 
+    	return stringAccount;
+    }
 
 }
 

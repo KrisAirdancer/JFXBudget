@@ -45,6 +45,8 @@ public class MainUIController implements Initializable {
 	/********************
 	 * ACCOUNTS VARIABLES
 	 ********************/
+	ObservableList<Account> accounts;
+	
 	@FXML
 	private TableView<Account> accountsTable;
 	@FXML
@@ -76,6 +78,10 @@ public class MainUIController implements Initializable {
 		// Read transactions data from database and store it in the ObservableList
 		transactions = dbc.readInTransactions(); 
 		
+		/*******************************
+		 * Set up Transactions TableView
+		 *******************************/
+		
 		// Connect the data (objects - Product) to the TableColumns
 		dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("date")); // The last parameter here - in this case "date" - must match the variable "date" in the Trasaction class exactly.
 		payeeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("payee"));
@@ -86,7 +92,18 @@ public class MainUIController implements Initializable {
 		// Load data into the table
 		transactionsTable.setItems(transactions);
 		
+		/***************************
+		 * Set up Accounts TableView TODO
+		 ***************************/
+		
+		// 1. Populate accounts ObservableList - Call DBConnection method to do so
+		accounts = dbc.readInAccounts();
+		// 2. accountsTable.setItems(accounts);
+		
+		System.out.println("Transactions: " + transactions);
+		System.out.println("Accounts: " + accounts);
 		System.out.println("Initialization complete."); // TODO Delete this eventually
+		
 	}	
 
 	/**

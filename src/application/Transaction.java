@@ -60,8 +60,19 @@ public class Transaction {
 //    public void setAmountProperty(double amount) {this.amount = new SimpleDoubleProperty(amount);}
     // Note: There is no setter for the id Property - the id Property should NOT be modified.
     
-    
-    
+    /**
+     * Returns a String representation of the Transaction object.
+     */
+    public String toString() {
+    	
+    	String stringTransaction = "[" + Integer.toString(id.get()) + ", " +
+    								date.get() + ", " +
+    								payee.get() + ", " +
+    								category.get() + ", " +
+    								note.get() + ", " +
+    								"$" + Double.toString(amount.get()) + "]"; 
+    	return stringTransaction;
+    }
     
 }
 

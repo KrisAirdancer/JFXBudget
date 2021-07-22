@@ -22,8 +22,16 @@ public class Transaction {
 	private final StringProperty note;
 	private final DoubleProperty amount;
 	
-	// Second constructor to initialize instance variables to desired values
-	// The two constructors are overloaded
+	/**
+	 * Constructor class for the Transaction class.
+	 * 
+	 * @param id
+	 * @param date
+	 * @param payee
+	 * @param category
+	 * @param note
+	 * @param amount
+	 */
 	public Transaction(int id, String date, String payee, String category, String note, double amount) {
 		this.id = new SimpleIntegerProperty(id);
 		this.date = new SimpleStringProperty(date);
@@ -34,9 +42,7 @@ public class Transaction {
 		
 	}
 	
-	
- 
-    // Define a getter for the property's value
+    // Define getters for the property's value. Note: This allows for a non-Property type to be returned.
     public final int getId(){return id.get();}
     public final String getDate(){return date.get();}
     public final String getPayee(){return payee.get();}
@@ -44,7 +50,7 @@ public class Transaction {
     public final String getNote(){return note.get();}
     public final double getAmount(){return amount.get();}
  
-     // Define a getter for the property itself
+    // Define getters for the property itself Note: This returns a Property type.
     public IntegerProperty idProperty() {return id;}
     public StringProperty dateProperty() {return date;}
     public StringProperty payeeProperty() {return payee;}
@@ -52,40 +58,19 @@ public class Transaction {
     public StringProperty noteProperty() {return note;}
     public DoubleProperty amountProperty() {return amount;}
 	
-
-	/*
-	 * JavaFX tables will look for (behind the scenes) getters and setters for the 
-	 * table values. The naming convention get"PropertyName" must be followed.
-	 * Ex. getName Ex. getPrice Ex. getQuantity
-	 * 
-	 * Note: id intentionally left unaccessible - id is should NOT be changeable
-	 */
-//	public SimpleIntegerProperty getId() {
-//		return id;
-//	}
-//
-//	public SimpleStringProperty getDate() {
-//		return date;
-//	}
-//
-//	public SimpleStringProperty getPayee() {
-//		return payee;
-//	}
-//
-//	public SimpleStringProperty getCategory() {
-//		return category;
-//	}
-//
-//
-//	public SimpleStringProperty getNote() {
-//		return note;
-//	}
-//
-//	public SimpleDoubleProperty getAmount() {
-//		return amount;
-//	}
-	
-
-	
-	
+    // ***THE BELOW LINES HAVE BEEN COMMENTED OUT B/C THE SETTERS ARE NOT YET NEEDED AND THEY CONFLICT WITH THE FINAL MODIFIER OF THE PROPERTIES IN THIS CLASS - if setters are needed later, change the final modifier of the Properties***
+	// Define setters for the properties. Note: No need to have a setter for the "property's value," the value will be set by these setters
+//    public void setDateProperty(String date) {this.date = new SimpleStringProperty(date);}
+//    public void setPayeeProperty(String payee) {this.payee = new SimpleStringProperty(payee);}
+//    public void setCategoryProperty(String category) {this.category = new SimpleStringProperty(category);}
+//    public void setNoteProperty(String note) {this.note = new SimpleStringProperty(note);}
+//    public void setAmountProperty(double amount) {this.amount = new SimpleDoubleProperty(amount);}
+    // Note: There is no setter for the id Property - the id Property should NOT be modified.
+    
+    
+    
+    
 }
+
+
+

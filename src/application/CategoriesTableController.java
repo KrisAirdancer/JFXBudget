@@ -25,12 +25,10 @@ public class CategoriesTableController implements Initializable {
 	private Connection connection;
 	
 	private ObservableList<Transaction> transactions;
-	
+	// TODO I think I can consolidate all of my @FXML statements into one @FXML above all of the statements.
 	@FXML
 	private TableView<Transaction> transactionsTable;
 	
-	@FXML
-	public TableColumn<Transaction, Integer> idCol;
 	@FXML
 	public TableColumn<Transaction, String> dateCol;
 	@FXML
@@ -56,13 +54,6 @@ public class CategoriesTableController implements Initializable {
 		
 		// Initialize necessary objects
 		transactions = FXCollections.observableArrayList();
-//		transactionsTable = new TableView<Transaction>();
-//		idCol = new TableColumn<Transaction, Integer>();
-//		dateCol = new TableColumn<Transaction, String>();
-//		payeeCol = new TableColumn<Transaction, String>();
-//		categoryCol = new TableColumn<Transaction, String>();
-//		noteCol = new TableColumn<Transaction, String>();
-//		amountCol = new TableColumn<Transaction, Double>();
 		
 		// Establish connection to database
 		connectToDatabase();
@@ -70,11 +61,7 @@ public class CategoriesTableController implements Initializable {
 		// Read transactions data from database and store it in the ObservableList
 		readInTransactions();
 		
-		// TEST: Print the contents of the table to the console to ensure that data was read in properly. TODO Delete this test code
-		printTableDataToConsole();
-		
 		// Connect the data (objects - Product) to the TableColumns
-		idCol.setCellValueFactory(new PropertyValueFactory<Transaction, Integer>("id"));
 		dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("date")); // The last parameter here - in this case "date" - must match the variable "date" in the Trasaction class exactly.
 		payeeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("payee"));
 		categoryCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("category"));
@@ -84,17 +71,14 @@ public class CategoriesTableController implements Initializable {
 		// Load data into the table
 		transactionsTable.setItems(transactions);
 		
-		// Add columns to the table - TODO The warning here states that a Generic Array is created. I may want to make my own array, populate it, and then assign it to the TableView object so that Java doesn't have to make one itself.
-//		transactionsTable.getColumns().addAll(dateCol, payeeCol, categoryCol, noteCol, amountCol);
-		
-		
-		System.out.println(transactionsTable.getColumns());
-		
-		System.out.println("Initialization complete.");
+		System.out.println("Initialization complete."); // TODO Delete this eventually
 	}	
 	
 	/**
 	 * Connects the program to the Dummy.db database.
+	 * 
+	 * TODO Could be made a general method by 1) allowing the user to input their own URL and
+	 * 2) by returning the connection object.
 	 */
 	public void connectToDatabase() {
 		
@@ -110,8 +94,11 @@ public class CategoriesTableController implements Initializable {
 	}
 	
 	/**
-	 * Reads data in from the database, initializes transaction objects with the data, and'
+	 * Reads data in from the database, initializes transaction objects with the data, and
 	 * stores the data in an ObservableList.
+	 * 
+	 * TODO Could be made general by 1) allowing the SQL query to be set by the user and
+	 * 2) having the method return an ObservableList object.
 	 */
 	public void readInTransactions() {
 		
@@ -125,9 +112,9 @@ public class CategoriesTableController implements Initializable {
 			// Execute SQL query and store the results in a ResultSet object
 			ResultSet result = statement.executeQuery(query);
 
-			// Create Transaction object(s)
+			// Pull data from database and use it to populate Transaction object(s)
 			while (result.next()) {
-
+				// Pull all desired fields from the database
 				int id = result.getInt("Transaction ID");
 				String date = result.getString("Date");
 				String payee = result.getString("Payee");
@@ -135,8 +122,9 @@ public class CategoriesTableController implements Initializable {
 				String note = result.getString("Note");
 				double amount = result.getDouble("Amount");
 
+				// Create a Transaction object and populate it with data from the database
 				Transaction trans = new Transaction(id, date, payee, category, note, amount);
-
+				// Add the Transaction object to the transactions Observable List
 				transactions.add(trans);
 			}
 		} catch (Exception e) {
@@ -148,24 +136,24 @@ public class CategoriesTableController implements Initializable {
 	}
 	
 	/**
-	 * Prints the contents of the database to the console.
+	 * Prints the entire contents of the database to the console.
 	 */
 	public void printTableDataToConsole() {
 		
 		try {
-			// 2) Select all rows from the table...
+			// 2) Create an SQL query that selects all rows from the table
 			String sql = "SELECT * FROM Transactions";
 			
-			// 3) ???
+			// 3) Create a Statement object to execute the SQL query
 			Statement statement = connection.createStatement();
 			
-			// 4) ???
+			// 4) Execute SQL query and store the results in a ResultSet object
 			ResultSet result = statement.executeQuery(sql);
 			
-			// 5) Print the data pulled from the database
+			// 5) Pull and print the data from the database
 			while (result.next()) {
 				// Time Stamp: 11:59 https://www.youtube.com/watch?v=293M9-QRZ0c&ab_channel=CodeJava
-				
+				// Pull all of the data from the database
 				String ID = result.getString("Transaction ID");
 				String Date = result.getString("Date");
 				String Payee = result.getString("Payee");
@@ -173,21 +161,19 @@ public class CategoriesTableController implements Initializable {
 				String Note = result.getString("Note");
 				String Amount = result.getString("Amount");
 				
+				// Print the data from the database
 				System.out.println(ID + " | " + Date + " | " + Payee + " | " + Category + " | " + Note + " | " + Amount);
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to print data to console");
 		}
 	}
-	
-	
-	
+
 /**
  * Controls the test button. Test button makes sure UI can still communicate with .fxml and Controller files.
  */
 	public void testMethod() {
 		System.out.println("Test successful!");
-		testButton.setText("Test successful!");
 	}
 
 }

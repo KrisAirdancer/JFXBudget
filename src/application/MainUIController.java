@@ -54,6 +54,16 @@ public class MainUIController implements Initializable {
 	@FXML
 	public TableColumn<Account, Double> balanceCol;
 	
+	/*********************************
+	 * ACCOUNT AND TRANSACTION BUTTONS
+	 *********************************/
+//	@FXML
+//	private Button transactionButton;
+	@FXML
+	private TableColumn<Transaction, Button> transactionButtonCol;
+	@FXML
+	private TableColumn<Account, Button> accountButtonCol;
+	
 	/*******************
 	 * TESTING VARIABLES
 	 *******************/
@@ -83,17 +93,19 @@ public class MainUIController implements Initializable {
 		 *******************************/
 		
 		// Connect the data (objects - Transaction) to the TableColumns
-		dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("date")); // The last parameter here - in this case "date" - must match the variable "date" in the Trasaction class exactly.
+		dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("date")); // The last parameter here - in this case "date" - must match the variable "date" in the Transaction class exactly.
 		payeeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("payee"));
 		categoryCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("category"));
 		noteCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("note"));
 		amountCol.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("amount"));
+		// Connecting button to TableColumn - TODO Should it be String type or Button type? (same question for declaration at top of class)
+		transactionButtonCol.setCellValueFactory(new PropertyValueFactory<Transaction, Button>("transactionButton"));
 		
 		// Load data into the table
 		transactionsTable.setItems(transactions);
 		
 		/***************************
-		 * Set up Accounts TableView TODO
+		 * Set up Accounts TableView
 		 ***************************/
 		
 		// Connect the data (objects - Account) to the TableColumns
@@ -105,6 +117,10 @@ public class MainUIController implements Initializable {
 		
 		// Load data into table
 		accountsTable.setItems(accounts);
+		
+		/******************
+		 * STATUS & TESTING
+		 ******************/
 		
 		// Print status and tests to the console - TODO Delete these eventually
 		System.out.println("Transactions: " + transactions);

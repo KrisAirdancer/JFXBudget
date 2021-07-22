@@ -82,7 +82,7 @@ public class MainUIController implements Initializable {
 		 * Set up Transactions TableView
 		 *******************************/
 		
-		// Connect the data (objects - Product) to the TableColumns
+		// Connect the data (objects - Transaction) to the TableColumns
 		dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("date")); // The last parameter here - in this case "date" - must match the variable "date" in the Trasaction class exactly.
 		payeeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("payee"));
 		categoryCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("category"));
@@ -96,10 +96,17 @@ public class MainUIController implements Initializable {
 		 * Set up Accounts TableView TODO
 		 ***************************/
 		
-		// 1. Populate accounts ObservableList - Call DBConnection method to do so
-		accounts = dbc.readInAccounts();
-		// 2. accountsTable.setItems(accounts);
+		// Connect the data (objects - Account) to the TableColumns
+		nameCol.setCellValueFactory(new PropertyValueFactory<Account, String>("name"));
+		balanceCol.setCellValueFactory(new PropertyValueFactory<Account, Double>("balance"));
 		
+		// Populate accounts ObservableList
+		accounts = dbc.readInAccounts();
+		
+		// Load data into table
+		accountsTable.setItems(accounts);
+		
+		// Print status and tests to the console - TODO Delete these eventually
 		System.out.println("Transactions: " + transactions);
 		System.out.println("Accounts: " + accounts);
 		System.out.println("Initialization complete."); // TODO Delete this eventually

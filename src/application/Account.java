@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -36,8 +37,21 @@ public class Account {
 	 * transactions read in by the DBConnection class. 
 	 */
 	public void getTransactions() {
-		
+		// TODO Build this out
 	}
+	
+    // Define getters for the Properties' values. Note: This allows for a non-Property type to be returned.
+    public String getName() {return name.get();}
+    public double getBalance() {return balance.get();}
+ 
+    // Define getters for the Property itself Note: This returns a Property type.
+    public StringProperty nameProperty() {return name;}
+    public DoubleProperty doubleProperty() {return balance;}
+
+	// Setters
+    public void setName(String name) {this.name = new SimpleStringProperty(name);}
+    public void setBalance(double balance) {this.balance = new SimpleDoubleProperty(balance);}
+	
 	
     /**
      * Returns a String representation of the Account object.
@@ -49,22 +63,3 @@ public class Account {
     }
 
 }
-
-
-
-// TODO Transfer the below notes to Obsidian or to somewhere else that makes sense - the comments in the codebase may do enough explaining that I can just delete all of this anyway.
-/* - Each Transaction will know which account it is in, and when the program is loaded,
- * each account will be populated with the transactions from the Dummy.db database
- * that have the matching account associated with them.
- * 
- * - To save Accounts after the program is shut down, new accounts, when created, will
- * be added to their own database Accounts.db. On program start, the Accounts will be
- * created from the Accounts.db database.
- * 
- * NEEDED/TODO:
- * - A list to store the transactions associated with an account in (ObservableList - we want it
- * to be updatable).
- * - Methods + Constructor to read in the appropriate transactions.
- * - Create a database to house a list of accounts.
- * - Get accounts to display in the TableView in UI
- */

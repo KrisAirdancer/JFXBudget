@@ -35,13 +35,13 @@ public class Transaction {
 		
 	}
 	
-    // Define getters for the property's value. Note: This allows for a non-Property type to be returned.
-    public final int getId(){return id.get();}
-    public final String getDate(){return date.get();}
-    public final String getPayee(){return payee.get();}
-    public final String getCategory(){return category.get();}
-    public final String getNote(){return note.get();}
-    public final double getAmount(){return amount.get();}
+    // Define getters for the Properties' values. Note: This allows for a non-Property type to be returned.
+    public final int getId() {return id.get();}
+    public final String getDate() {return date.get();}
+    public final String getPayee() {return payee.get();}
+    public final String getCategory() {return category.get();}
+    public final String getNote() {return note.get();}
+    public final double getAmount() {return amount.get();}
  
     // Define getters for the property itself Note: This returns a Property type.
     public IntegerProperty idProperty() {return id;}

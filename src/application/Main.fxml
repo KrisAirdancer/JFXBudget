@@ -41,6 +41,7 @@
               <columns>
                 <TableColumn fx:id="nameCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Name" />
                 <TableColumn fx:id="balanceCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Balance" />
+                  <TableColumn fx:id="accountButtonCol" prefWidth="75.0" />
               </columns>
             </TableView>
          </content>
@@ -49,12 +50,12 @@
          <content>
             <TableView fx:id="transactionsTable">
               <columns>
+                  <TableColumn fx:id="transactionButtonCol" maxWidth="-1.0" minWidth="50.0" prefWidth="-1.0" />
                 <TableColumn fx:id="dateCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Date" />
                   <TableColumn fx:id="payeeCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Payee" />
                   <TableColumn fx:id="categoryCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Category" />
                   <TableColumn fx:id="noteCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Note" />
                   <TableColumn fx:id="amountCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" text="Amount" />
-                  <TableColumn fx:id="transactionButtonCol" maxWidth="-1.0" minWidth="100.0" prefWidth="-1.0" />
               </columns>
             </TableView>
          </content>

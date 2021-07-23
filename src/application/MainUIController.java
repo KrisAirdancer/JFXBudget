@@ -101,18 +101,16 @@ public class MainUIController implements Initializable {
 		categoryCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("category"));
 		noteCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("note"));
 		amountCol.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("amount"));
-		// Connecting button to TableColumn - TODO Should it be String type or Button type? (same question for declaration at top of class)
-//		transactionButtonCol.setCellValueFactory(new PropertyValueFactory<Transaction, Button>("transactionButton"));
 		
 		// Load data into the table
 		transactionsTable.setItems(transactions);
 		
-		/****************
-		 * Set up buttons
-		 ****************/
+		/***********************************
+		 * Set up Transactions Table buttons
+		 ***********************************/
 		
 		// Create a Cell Factory
-		Callback<TableColumn<Transaction, Button>, TableCell<Transaction, Button>> cellFactory = (param) -> {
+		Callback<TableColumn<Transaction, Button>, TableCell<Transaction, Button>> TransactionsCellFactory = (param) -> {
 			
 			// Make a TableCell to house the button
 			final TableCell<Transaction, Button> cell = new TableCell<Transaction, Button>() {
@@ -128,10 +126,10 @@ public class MainUIController implements Initializable {
 						setText(null);
 					} else {
 						// Create a button
-						final Button transactionButton = new Button("Edit"); // Statement from example video (39:42):https://www.youtube.com/watch?v=gvko7jLPZT0&ab_channel=DanMlayah
+						final Button transactionEditButton = new Button("Edit"); // Statement from example video (39:42):https://www.youtube.com/watch?v=gvko7jLPZT0&ab_channel=DanMlayah
 						
 						// Attach listener to button
-						transactionButton.setOnAction(event -> { // This controls what happens when the button is clicked
+						transactionEditButton.setOnAction(event -> { // This controls what happens when the button is clicked
 							
 							// Extract the clicked Transaction object
 							Transaction trans = getTableView().getItems().get(getIndex());
@@ -145,7 +143,7 @@ public class MainUIController implements Initializable {
 						});
 						
 						// Assign the created button to a cell
-						setGraphic(transactionButton);
+						setGraphic(transactionEditButton);
 						setText(null);
 					}
 				}
@@ -157,7 +155,59 @@ public class MainUIController implements Initializable {
 		};
 		
 		// Assign the custom CellFactory to the appropriate TableColumn
-		transactionButtonCol.setCellFactory(cellFactory);
+		transactionButtonCol.setCellFactory(TransactionsCellFactory);
+		
+		/***********************************
+		 * Set up Accounts Table buttons
+		 ***********************************/
+		
+		// Create a Cell Factory
+		Callback<TableColumn<Account, Button>, TableCell<Account, Button>> accountsCellFactory = (param) -> {
+			
+			// Make a TableCell to house the button
+			final TableCell<Account, Button> cell = new TableCell<Account, Button>() {
+				
+				// Override updateItems method
+				@Override
+				public void updateItem(Button item, boolean empty) {
+					super.updateItem(item, empty);
+					
+					// Ensure that cells are only create in non-empty rows
+					if (empty) {
+						setGraphic(null);
+						setText(null);
+					} else {
+						// Create a button
+						final Button accountEditButton = new Button("Edit"); // Statement from example video (39:42):https://www.youtube.com/watch?v=gvko7jLPZT0&ab_channel=DanMlayah
+						
+						// Attach listener to button
+						accountEditButton.setOnAction(event -> { // This controls what happens when the button is clicked
+							
+							// Extract the clicked Transaction object
+							Account acct = getTableView().getItems().get(getIndex());
+							
+							// Show which item has been selected
+//							Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//							alert.setContentText("You clicked " + trans.getDate() + trans.getPayee() + trans.getAmount());
+//							alert.show();
+							
+							System.out.println("You cliked it!");
+						});
+						
+						// Assign the created button to a cell
+						setGraphic(accountEditButton);
+						setText(null);
+					}
+				}
+				
+			;	
+				
+			};
+			return cell;
+		};
+		
+		// Assign the custom CellFactory to the appropriate TableColumn
+		accountButtonCol.setCellFactory(accountsCellFactory);
 		
 		/***************************
 		 * Set up Accounts TableView

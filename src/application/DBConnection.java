@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +15,7 @@ public class DBConnection {
 	private Connection connection;
 	
 	private ObservableList<Transaction> transactions;
+	private ObservableList<Account> accounts;
 	
 	/**
 	 * Connects the program to the Dummy.db database.
@@ -77,6 +79,45 @@ public class DBConnection {
 		}
 		return transactions;
 	}
+	
+	/**
+	 * Reads in all Account data from database.
+	 */
+	public ObservableList<Account> readInAccounts() {
+		
+		// Initialize accounts ObservableList
+		accounts = FXCollections.observableArrayList();
+		
+		try {
+			
+			// Setup the SQL query
+			String query = "SELECT * FROM Accounts";
+			
+			// Create a Statement object to execute the SQL query
+			Statement statement = connection.createStatement();
+			
+			// Execute SQL query and store the results in a ResultSet object
+			ResultSet result = statement.executeQuery(query);
+			
+			// Pull data from database and use it to populate Transaction object(s)
+			while (result.next()) {
+				// Pull all desired fields from the database
+				String name = result.getString("Name");
+				double balance = result.getDouble("Balance");
+
+				// Create an Account object and populate it with data from the database
+				Account acct = new Account(name, balance);
+				// Add the Account object to the accounts Observable List
+				accounts.add(acct);
+			}
+		} catch (Exception e) {
+			System.out.println("Failed to create Account object(s) from database.");
+			e.printStackTrace();
+		}
+		return accounts;
+	}
+	
+	
 
 	/**
 	 * Prints the entire contents of the database to the console.

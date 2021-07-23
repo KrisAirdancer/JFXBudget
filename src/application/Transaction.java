@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.control.Button;
 
 /**
  * See this on how to properly set up the Property object types in this class: https://docs.oracle.com/javafx/2/binding/jfxpub-binding.htm
@@ -22,15 +23,10 @@ public class Transaction {
 	private final StringProperty note;
 	private final DoubleProperty amount;
 	
+	private Button transactionButton;
+	
 	/**
 	 * Constructor class for the Transaction class.
-	 * 
-	 * @param id
-	 * @param date
-	 * @param payee
-	 * @param category
-	 * @param note
-	 * @param amount
 	 */
 	public Transaction(int id, String date, String payee, String category, String note, double amount) {
 		this.id = new SimpleIntegerProperty(id);
@@ -39,16 +35,18 @@ public class Transaction {
 		this.category = new SimpleStringProperty(category);
 		this.note = new SimpleStringProperty(note);
 		this.amount = new SimpleDoubleProperty(amount);
+		this.transactionButton = new Button("Edit");
 		
 	}
 	
-    // Define getters for the property's value. Note: This allows for a non-Property type to be returned.
-    public final int getId(){return id.get();}
-    public final String getDate(){return date.get();}
-    public final String getPayee(){return payee.get();}
-    public final String getCategory(){return category.get();}
-    public final String getNote(){return note.get();}
-    public final double getAmount(){return amount.get();}
+    // Define getters for the Properties' values. Note: This allows for a non-Property type to be returned.
+    public final int getId() {return id.get();}
+    public final String getDate() {return date.get();}
+    public final String getPayee() {return payee.get();}
+    public final String getCategory() {return category.get();}
+    public final String getNote() {return note.get();}
+    public final double getAmount() {return amount.get();}
+    public Button getButton() {return transactionButton;}
  
     // Define getters for the property itself Note: This returns a Property type.
     public IntegerProperty idProperty() {return id;}
@@ -57,6 +55,7 @@ public class Transaction {
     public StringProperty categoryProperty() {return category;}
     public StringProperty noteProperty() {return note;}
     public DoubleProperty amountProperty() {return amount;}
+//    public Button transactionButtonProperty() {return transactionButton;}
 	
     // ***THE BELOW LINES HAVE BEEN COMMENTED OUT B/C THE SETTERS ARE NOT YET NEEDED AND THEY CONFLICT WITH THE FINAL MODIFIER OF THE PROPERTIES IN THIS CLASS - if setters are needed later, change the final modifier of the Properties***
 	// Define setters for the properties. Note: No need to have a setter for the "property's value," the value will be set by these setters
@@ -67,8 +66,19 @@ public class Transaction {
 //    public void setAmountProperty(double amount) {this.amount = new SimpleDoubleProperty(amount);}
     // Note: There is no setter for the id Property - the id Property should NOT be modified.
     
-    
-    
+    /**
+     * Returns a String representation of the Transaction object.
+     */
+    public String toString() {
+    	
+    	String stringTransaction = "[" + Integer.toString(id.get()) + ", " +
+    								date.get() + ", " +
+    								payee.get() + ", " +
+    								category.get() + ", " +
+    								note.get() + ", " +
+    								"$" + Double.toString(amount.get()) + "]"; 
+    	return stringTransaction;
+    }
     
 }
 

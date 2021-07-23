@@ -13,12 +13,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.shape.Circle;
+import javafx.util.Callback;
 
 public class MainUIController implements Initializable {
 	
@@ -54,6 +57,16 @@ public class MainUIController implements Initializable {
 	@FXML
 	public TableColumn<Account, Double> balanceCol;
 	
+	/*********************************
+	 * ACCOUNT AND TRANSACTION BUTTONS
+	 *********************************/
+//	@FXML
+//	private Button transactionButton;
+	@FXML
+	private TableColumn<Transaction, Button> transactionButtonCol;
+	@FXML
+	private TableColumn<Account, Button> accountButtonCol;
+	
 	/*******************
 	 * TESTING VARIABLES
 	 *******************/
@@ -83,17 +96,71 @@ public class MainUIController implements Initializable {
 		 *******************************/
 		
 		// Connect the data (objects - Transaction) to the TableColumns
-		dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("date")); // The last parameter here - in this case "date" - must match the variable "date" in the Trasaction class exactly.
+		dateCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("date")); // The last parameter here - in this case "date" - must match the variable "date" in the Transaction class exactly.
 		payeeCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("payee"));
 		categoryCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("category"));
 		noteCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("note"));
 		amountCol.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("amount"));
+		// Connecting button to TableColumn - TODO Should it be String type or Button type? (same question for declaration at top of class)
+//		transactionButtonCol.setCellValueFactory(new PropertyValueFactory<Transaction, Button>("transactionButton"));
 		
 		// Load data into the table
 		transactionsTable.setItems(transactions);
 		
+		/****************
+		 * Set up buttons
+		 ****************/
+		
+		// Create a Cell Factory
+		Callback<TableColumn<Transaction, Button>, TableCell<Transaction, Button>> cellFactory = (param) -> {
+			
+			// Make a TableCell to house the button
+			final TableCell<Transaction, Button> cell = new TableCell<Transaction, Button>() {
+				
+				// Override updateItems method
+				@Override
+				public void updateItem(Button item, boolean empty) {
+					super.updateItem(item, empty);
+					
+					// Ensure that cells are only create in non-empty rows
+					if (empty) {
+						setGraphic(null);
+						setText(null);
+					} else {
+						// Create a button
+						final Button transactionButton = new Button("Edit"); // Statement from example video (39:42):https://www.youtube.com/watch?v=gvko7jLPZT0&ab_channel=DanMlayah
+						
+						// Attach listener to button
+						transactionButton.setOnAction(event -> { // This controls what happens when the button is clicked
+							
+							// Extract the clicked Transaction object
+							Transaction trans = getTableView().getItems().get(getIndex());
+							
+							// Show which item has been selected
+//							Alert alert = new Alert(Alert.AlertType.INFORMATION);
+//							alert.setContentText("You clicked " + trans.getDate() + trans.getPayee() + trans.getAmount());
+//							alert.show();
+							
+							System.out.println("You cliked it!");
+						});
+						
+						// Assign the created button to a cell
+						setGraphic(transactionButton);
+						setText(null);
+					}
+				}
+				
+			;	
+				
+			};
+			return cell;
+		};
+		
+		// Assign the custom CellFactory to the appropriate TableColumn
+		transactionButtonCol.setCellFactory(cellFactory);
+		
 		/***************************
-		 * Set up Accounts TableView TODO
+		 * Set up Accounts TableView
 		 ***************************/
 		
 		// Connect the data (objects - Account) to the TableColumns
@@ -105,6 +172,10 @@ public class MainUIController implements Initializable {
 		
 		// Load data into table
 		accountsTable.setItems(accounts);
+		
+		/******************
+		 * STATUS & TESTING
+		 ******************/
 		
 		// Print status and tests to the console - TODO Delete these eventually
 		System.out.println("Transactions: " + transactions);

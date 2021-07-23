@@ -55,7 +55,7 @@ public class Transaction {
     public StringProperty categoryProperty() {return category;}
     public StringProperty noteProperty() {return note;}
     public DoubleProperty amountProperty() {return amount;}
-    public Button transactionButtonProperty() {return transactionButton;}
+//    public Button transactionButtonProperty() {return transactionButton;}
 	
     // ***THE BELOW LINES HAVE BEEN COMMENTED OUT B/C THE SETTERS ARE NOT YET NEEDED AND THEY CONFLICT WITH THE FINAL MODIFIER OF THE PROPERTIES IN THIS CLASS - if setters are needed later, change the final modifier of the Properties***
 	// Define setters for the properties. Note: No need to have a setter for the "property's value," the value will be set by these setters

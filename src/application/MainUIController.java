@@ -134,11 +134,6 @@ public class MainUIController implements Initializable {
 							// Extract the clicked Transaction object
 							Transaction trans = getTableView().getItems().get(getIndex());
 							
-							// Show which item has been selected
-//							Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//							alert.setContentText("You clicked " + trans.getDate() + trans.getPayee() + trans.getAmount());
-//							alert.show();
-							
 							System.out.println("You cliked it!");
 						});
 						
@@ -185,11 +180,6 @@ public class MainUIController implements Initializable {
 							
 							// Extract the clicked Transaction object
 							Account acct = getTableView().getItems().get(getIndex());
-							
-							// Show which item has been selected
-//							Alert alert = new Alert(Alert.AlertType.INFORMATION);
-//							alert.setContentText("You clicked " + trans.getDate() + trans.getPayee() + trans.getAmount());
-//							alert.show();
 							
 							System.out.println("You cliked it!");
 						});

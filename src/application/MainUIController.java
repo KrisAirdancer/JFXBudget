@@ -18,8 +18,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.shape.Circle;
 import javafx.util.Callback;
 
@@ -101,6 +104,28 @@ public class MainUIController implements Initializable {
 		categoryCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("category"));
 		noteCol.setCellValueFactory(new PropertyValueFactory<Transaction, String>("note"));
 		amountCol.setCellValueFactory(new PropertyValueFactory<Transaction, Double>("amount"));
+		
+		// Make cells editable
+		dateCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		payeeCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		categoryCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		noteCol.setCellFactory(TextFieldTableCell.forTableColumn());
+//		amountCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		
+		// Source of below code: https://stackoverflow.com/questions/27117949/javafx-use-string-with-double-on-table-column
+		amountCol.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject()); // TODO Note that this solution to the issue caused by deleting the .asObject() call may prevent my values from updating when users edit the table. See here: https://stackoverflow.com/questions/30334450/cannot-convert-from-string-to-observablevaluestring
+
+		amountCol.setCellFactory(col -> new TableCell<Transaction, Double>() {
+//		        @Override 
+		        public void updateItem(Number price, boolean empty) {
+		            super.updateItem((Double) price, empty);
+		            if (empty) {
+		                setText(null);
+		            } else {
+		                setText(String.format("US$%.2f", price.doubleValue()));
+		            }
+		        }
+		    });
 		
 		// Load data into the table
 		transactionsTable.setItems(transactions);
@@ -226,6 +251,18 @@ public class MainUIController implements Initializable {
 		
 	}	
 
+	
+	@FXML
+	public void onEditCommitSelectedProductTable(CellEditEvent<?,?> event){
+	    Object newValue = event.getNewValue();
+	    // other data that might be helpful:
+	    TablePosition<?,?> position = event.getTablePosition();
+	    int row = position.getRow();
+	    // etc ...
+	    
+	    System.out.println("It worked!");
+	}
+	
 	/**
 	 * Controls the test button. Test button makes sure UI can still communicate with .fxml and Controller files.
 	 */

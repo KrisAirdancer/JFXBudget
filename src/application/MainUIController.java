@@ -33,7 +33,7 @@ public class MainUIController implements Initializable {
 	private ObservableList<Transaction> transactions;
 	
 	@FXML
-	private TableView<Transaction> transactionsTable;
+	public TableView<Transaction> transactionsTable;
 	@FXML
 	private TableColumn<Transaction, String> dateCol;
 	@FXML
@@ -51,7 +51,7 @@ public class MainUIController implements Initializable {
 	ObservableList<Account> accounts;
 	
 	@FXML
-	private TableView<Account> accountsTable;
+	public TableView<Account> accountsTable;
 	@FXML
 	public TableColumn<Account, String> nameCol;
 	@FXML
@@ -104,6 +104,8 @@ public class MainUIController implements Initializable {
 		
 		// Load data into the table
 		transactionsTable.setItems(transactions);
+		
+//		transactionsTable.prefWidthProperty().bind(Main.p);
 		
 		/***********************************
 		 * Set up Transactions Table buttons

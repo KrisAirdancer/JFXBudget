@@ -110,22 +110,22 @@ public class MainUIController implements Initializable {
 		payeeCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		categoryCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		noteCol.setCellFactory(TextFieldTableCell.forTableColumn());
-//		amountCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		amountCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		
 		// Source of below code: https://stackoverflow.com/questions/27117949/javafx-use-string-with-double-on-table-column
-		amountCol.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject()); // TODO Note that this solution to the issue caused by deleting the .asObject() call may prevent my values from updating when users edit the table. See here: https://stackoverflow.com/questions/30334450/cannot-convert-from-string-to-observablevaluestring
+//		amountCol.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject()); // TODO Note that this solution to the issue caused by deleting the .asObject() call may prevent my values from updating when users edit the table. See here: https://stackoverflow.com/questions/30334450/cannot-convert-from-string-to-observablevaluestring
 
-		amountCol.setCellFactory(col -> new TableCell<Transaction, Double>() {
-//		        @Override 
-		        public void updateItem(Number price, boolean empty) {
-		            super.updateItem((Double) price, empty);
-		            if (empty) {
-		                setText(null);
-		            } else {
-		                setText(String.format("US$%.2f", price.doubleValue()));
-		            }
-		        }
-		    });
+//		amountCol.setCellFactory(col -> new TableCell<Transaction, Double>() {
+////		        @Override 
+//		        public void updateItem(Number price, boolean empty) {
+//		            super.updateItem((Double) price, empty);
+//		            if (empty) {
+//		                setText(null);
+//		            } else {
+//		                setText(String.format("US$%.2f", price.doubleValue()));
+//		            }
+//		        }
+//		    });
 		
 		// Load data into the table
 		transactionsTable.setItems(transactions);

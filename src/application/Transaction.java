@@ -17,11 +17,11 @@ public class Transaction {
     
 	// Each of these variables will become a column in our TableView
 	private final IntegerProperty id;
-	private final StringProperty date;
-	private final StringProperty payee;
-	private final StringProperty category;
-	private final StringProperty note;
-	private final DoubleProperty amount;
+	private StringProperty date;
+	private StringProperty payee;
+	private StringProperty category;
+	private StringProperty note;
+	private DoubleProperty amount;
 	
 	private Button transactionButton;
 	
@@ -49,21 +49,20 @@ public class Transaction {
     public Button getButton() {return transactionButton;}
  
     // Define getters for the property itself Note: This returns a Property type.
-    public IntegerProperty idProperty() {return id;}
-    public StringProperty dateProperty() {return date;}
-    public StringProperty payeeProperty() {return payee;}
-    public StringProperty categoryProperty() {return category;}
-    public StringProperty noteProperty() {return note;}
-    public DoubleProperty amountProperty() {return amount;}
-//    public Button transactionButtonProperty() {return transactionButton;}
+    public final IntegerProperty idProperty() {return id;}
+    public final StringProperty dateProperty() {return date;}
+    public final StringProperty payeeProperty() {return payee;}
+    public final StringProperty categoryProperty() {return category;}
+    public final StringProperty noteProperty() {return note;}
+    public final DoubleProperty amountProperty() {return amount;}
 	
     // ***THE BELOW LINES HAVE BEEN COMMENTED OUT B/C THE SETTERS ARE NOT YET NEEDED AND THEY CONFLICT WITH THE FINAL MODIFIER OF THE PROPERTIES IN THIS CLASS - if setters are needed later, change the final modifier of the Properties***
 	// Define setters for the properties. Note: No need to have a setter for the "property's value," the value will be set by these setters
-//    public void setDateProperty(String date) {this.date = new SimpleStringProperty(date);}
-//    public void setPayeeProperty(String payee) {this.payee = new SimpleStringProperty(payee);}
-//    public void setCategoryProperty(String category) {this.category = new SimpleStringProperty(category);}
-//    public void setNoteProperty(String note) {this.note = new SimpleStringProperty(note);}
-//    public void setAmountProperty(double amount) {this.amount = new SimpleDoubleProperty(amount);}
+    public final void setDateProperty(String date) {this.date = new SimpleStringProperty(date);}
+    public final void setPayeeProperty(String payee) {this.payee = new SimpleStringProperty(payee);}
+    public final void setCategoryProperty(String category) {this.category = new SimpleStringProperty(category);}
+    public final void setNoteProperty(String note) {this.note = new SimpleStringProperty(note);}
+    public final void setAmountProperty(double amount) {this.amount = new SimpleDoubleProperty(amount);}
     // Note: There is no setter for the id Property - the id Property should NOT be modified.
     
     /**

@@ -4,13 +4,14 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.NumberFormat;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.*;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -25,6 +26,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.shape.Circle;
 import javafx.util.Callback;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 public class MainUIController implements Initializable {
 	
@@ -110,27 +113,127 @@ public class MainUIController implements Initializable {
 		payeeCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		categoryCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		noteCol.setCellFactory(TextFieldTableCell.forTableColumn());
-		amountCol.setCellFactory(TextFieldTableCell.forTableColumn());
+		amountCol.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
 		
-		// Source of below code: https://stackoverflow.com/questions/27117949/javafx-use-string-with-double-on-table-column
-//		amountCol.setCellValueFactory(cellData -> cellData.getValue().amountProperty().asObject()); // TODO Note that this solution to the issue caused by deleting the .asObject() call may prevent my values from updating when users edit the table. See here: https://stackoverflow.com/questions/30334450/cannot-convert-from-string-to-observablevaluestring
+		// Formatting the Amount column data to USD currency
+		amountCol.setCellFactory(tableCell -> new TableCell<Transaction, Double>() {
 
-//		amountCol.setCellFactory(col -> new TableCell<Transaction, Double>() {
-////		        @Override 
-//		        public void updateItem(Number price, boolean empty) {
-//		            super.updateItem((Double) price, empty);
-//		            if (empty) {
-//		                setText(null);
-//		            } else {
-//		                setText(String.format("US$%.2f", price.doubleValue()));
-//		            }
-//		        }
-//		    });
+		    @Override
+		    protected void updateItem(Double amount, boolean empty) {
+		        super.updateItem(amount, empty);
+		        if (empty) {
+		            setText(null);
+		        } else {
+		        	setText(String.format("$ %.2f", amount));
+		        }
+		    }
+		});
+		
+		/*************************************************
+		 *  Set up EventListeners for transactions columns - allows us to change the value that is stored in the cell's data model and to update the database
+		 *************************************************/
+		
+		dateCol.setOnEditCommit(new EventHandler<CellEditEvent<Transaction, String>>() { // This is an abstract class
+
+			@Override
+			public void handle(CellEditEvent<Transaction, String> event) {
+				// Get the Transaction object for the row that is being edited
+				Transaction transaction = event.getRowValue();
+				
+				// Set the value to the new value that was entered by the user - do this by calling the setter in the Transaction class
+				transaction.setDateProperty(event.getNewValue());
+				
+				// Create SQL Statement
+				String SQLStatement = "UPDATE Transactions SET date = '" + transaction.getDate() + "' WHERE ID = '" + transaction.getId() + "'";
+				
+				// Call database setter method with appropriate data and SQL statement
+				dbc.updateDatabase(SQLStatement);
+			}
+			
+		});
+		
+		payeeCol.setOnEditCommit(new EventHandler<CellEditEvent<Transaction, String>>() { // This is an abstract class
+
+			@Override
+			public void handle(CellEditEvent<Transaction, String> event) {
+				// Get the Transaction object for the row that is being edited
+				Transaction transaction = event.getRowValue();
+				
+				// Set the value to the new value that was entered by the user - do this by calling the setter in the Transaction class
+				transaction.setPayeeProperty(event.getNewValue());
+				
+				// Create SQL Statement
+				String SQLStatement = "UPDATE Transactions SET payee = '" + transaction.getPayee() + "' WHERE ID = '" + transaction.getId() + "'";
+				
+				// Call database setter method with appropriate data and SQL statement
+				dbc.updateDatabase(SQLStatement);
+			}
+			
+		});
+		
+		categoryCol.setOnEditCommit(new EventHandler<CellEditEvent<Transaction, String>>() { // This is an abstract class
+
+			@Override
+			public void handle(CellEditEvent<Transaction, String> event) {
+				// Get the Transaction object for the row that is being edited
+				Transaction transaction = event.getRowValue();
+				
+				// Set the value to the new value that was entered by the user - do this by calling the setter in the Transaction class
+				transaction.setCategoryProperty(event.getNewValue());
+				
+				// Create SQL Statement
+				String SQLStatement = "UPDATE Transactions SET category = '" + transaction.getCategory() + "' WHERE ID = '" + transaction.getId() + "'";
+				
+				// Call database setter method with appropriate data and SQL statement
+				dbc.updateDatabase(SQLStatement);
+			}
+			
+		});
+		
+		noteCol.setOnEditCommit(new EventHandler<CellEditEvent<Transaction, String>>() { // This is an abstract class
+
+			@Override
+			public void handle(CellEditEvent<Transaction, String> event) {
+				// Get the Transaction object for the row that is being edited
+				Transaction transaction = event.getRowValue();
+				
+				// Set the value to the new value that was entered by the user - do this by calling the setter in the Transaction class
+				transaction.setNoteProperty(event.getNewValue());
+				
+				// Create SQL Statement
+				String SQLStatement = "UPDATE Transactions SET note = '" + transaction.getNote() + "' WHERE ID = '" + transaction.getId() + "'";
+				
+				// Call database setter method with appropriate data and SQL statement
+				dbc.updateDatabase(SQLStatement);
+			}
+			
+		});
+		
+		amountCol.setOnEditCommit(new EventHandler<CellEditEvent<Transaction, Double>>() { // This is an abstract class
+
+			@Override
+			public void handle(CellEditEvent<Transaction, Double> event) {
+				// Get the Transaction object for the row that is being edited
+				Transaction transaction = event.getRowValue();
+				
+				// Set the value to the new value that was entered by the user - do this by calling the setter in the Transaction class
+				transaction.setAmountProperty(event.getNewValue());
+				
+				// Create SQL Statement
+				String SQLStatement = "UPDATE Transactions SET amount = '" + transaction.getAmount() + "' WHERE ID = '" + transaction.getId() + "'";
+				
+				// Call database setter method with appropriate data and SQL statement
+				dbc.updateDatabase(SQLStatement);
+				
+				// Call updateItem() method to properly format the new value in the TableView
+				
+			}
+			
+		});
+		
 		
 		// Load data into the table
 		transactionsTable.setItems(transactions);
-		
-//		transactionsTable.prefWidthProperty().bind(Main.p);
 		
 		/***********************************
 		 * Set up Transactions Table buttons
@@ -245,23 +348,21 @@ public class MainUIController implements Initializable {
 		 ******************/
 		
 		// Print status and tests to the console - TODO Delete these eventually
-		System.out.println("Transactions: " + transactions);
-		System.out.println("Accounts: " + accounts);
 		System.out.println("Initialization complete."); // TODO Delete this eventually
 		
 	}	
 
-	
-	@FXML
-	public void onEditCommitSelectedProductTable(CellEditEvent<?,?> event){
-	    Object newValue = event.getNewValue();
-	    // other data that might be helpful:
-	    TablePosition<?,?> position = event.getTablePosition();
-	    int row = position.getRow();
-	    // etc ...
-	    
-	    System.out.println("It worked!");
-	}
+	// Not sure what the following code was for - doesn't seem to do anything
+//	@FXML
+//	public void onEditCommitSelectedProductTable(CellEditEvent<?,?> event){
+//	    Object newValue = event.getNewValue();
+//	    // other data that might be helpful:
+//	    TablePosition<?,?> position = event.getTablePosition();
+//	    int row = position.getRow();
+//	    // etc ...
+//	    
+//	    System.out.println("It worked!");
+//	}
 	
 	/**
 	 * Controls the test button. Test button makes sure UI can still communicate with .fxml and Controller files.

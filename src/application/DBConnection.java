@@ -61,7 +61,7 @@ public class DBConnection {
 			// Pull data from database and use it to populate Transaction object(s)
 			while (result.next()) {
 				// Pull all desired fields from the database
-				int id = result.getInt("Transaction ID");
+				int id = result.getInt("ID");
 				String date = result.getString("Date");
 				String payee = result.getString("Payee");
 				String category = result.getString("Category");
@@ -117,7 +117,21 @@ public class DBConnection {
 		return accounts;
 	}
 	
-	
+	/**
+	 * Updates data in the Dummy.db database
+	 */
+	public void updateDatabase(String SQLQuery) {
+		
+		try {
+			Statement statement = connection.createStatement();
+			statement.executeUpdate(SQLQuery);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("Failed to update database.");
+		}
+		
+	}
 
 	/**
 	 * Prints the entire contents of the database to the console.
@@ -138,7 +152,7 @@ public class DBConnection {
 			while (result.next()) {
 				// Time Stamp: 11:59 https://www.youtube.com/watch?v=293M9-QRZ0c&ab_channel=CodeJava
 				// Pull all of the data from the database
-				String ID = result.getString("Transaction ID");
+				String ID = result.getString("ID");
 				String Date = result.getString("Date");
 				String Payee = result.getString("Payee");
 				String Category = result.getString("Category");

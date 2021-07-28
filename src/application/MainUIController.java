@@ -116,18 +116,19 @@ public class MainUIController implements Initializable {
 		amountCol.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
 		
 		// Formatting the Amount column data to USD currency
-		amountCol.setCellFactory(tableCell -> new TableCell<Transaction, Double>() {
-
-		    @Override
-		    protected void updateItem(Double amount, boolean empty) {
-		        super.updateItem(amount, empty);
-		        if (empty) {
-		            setText(null);
-		        } else {
-		        	setText(String.format("$ %.2f", amount));
-		        }
-		    }
-		});
+//		amountCol.setCellFactory(tableCell -> new TableCell<Transaction, Double>() {
+//
+//		    @Override
+//		    protected void updateItem(Double amount, boolean empty) {
+//		        super.updateItem(amount, empty);
+//		        if (empty) {
+//		            setText(null);
+//		        } else {
+//		        	setText(String.format("$ %.2f", amount));
+//		        }
+//		        super.updateItem(amount, empty);
+//		    }
+//		});
 		
 		/*************************************************
 		 *  Set up EventListeners for transactions columns - allows us to change the value that is stored in the cell's data model and to update the database

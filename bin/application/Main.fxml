@@ -25,7 +25,7 @@
       <RowConstraints />
       <RowConstraints />
     <RowConstraints />
-      <RowConstraints vgrow="NEVER" />
+      <RowConstraints />
   </rowConstraints>
    <children>
       <MenuButton mnemonicParsing="false" prefHeight="15.0" prefWidth="115.0" text="MenuButton" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">

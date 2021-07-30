@@ -22,6 +22,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.shape.Circle;
@@ -66,12 +67,36 @@ public class MainUIController implements Initializable {
 	/*********************************
 	 * ACCOUNT AND TRANSACTION BUTTONS
 	 *********************************/
-//	@FXML
-//	private Button transactionButton;
 	@FXML
 	private TableColumn<Transaction, Button> transactionButtonCol;
 	@FXML
 	private TableColumn<Account, Button> accountButtonCol;
+
+	/******************
+	 * OTHER UI BUTTONS
+	 ******************/
+	@FXML
+	private Button newAcctButton; // New Account button
+	@FXML
+	private Button addTransButton; // Add Transaction button
+	
+	/*************
+	 * TEXT FIELDS
+	 *************/
+	@FXML
+	private TextField acctName;
+	@FXML
+	private TextField acctBal;
+	@FXML
+	private TextField transDate;
+	@FXML
+	private TextField transPayee;
+	@FXML
+	private TextField transCategory;
+	@FXML
+	private TextField transNote;
+	@FXML
+	private TextField transAmt;
 	
 	/*******************
 	 * TESTING VARIABLES
@@ -114,21 +139,6 @@ public class MainUIController implements Initializable {
 		categoryCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		noteCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		amountCol.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-		
-		// Formatting the Amount column data to USD currency
-//		amountCol.setCellFactory(tableCell -> new TableCell<Transaction, Double>() {
-//
-//		    @Override
-//		    protected void updateItem(Double amount, boolean empty) {
-//		        super.updateItem(amount, empty);
-//		        if (empty) {
-//		            setText(null);
-//		        } else {
-//		        	setText(String.format("$ %.2f", amount));
-//		        }
-//		        super.updateItem(amount, empty);
-//		    }
-//		});
 		
 		/*************************************************
 		 *  Set up EventListeners for transactions columns - allows us to change the value that is stored in the cell's data model and to update the database
@@ -305,18 +315,41 @@ public class MainUIController implements Initializable {
 		System.out.println("Initialization complete."); // TODO Delete this eventually
 		
 	}	
+	
+	/**
+	 * Controls the Add Transaction button
+	 */
+	public void addTransaction() {
+		
+		System.out.println("transButton Working.");
+		
+		/* NOTE: I shouldn't need to set the ID, it should be set automatically when I add a
+		 * new transaction to the DB. I will need to add a new overloaded constructor in the
+		 * transaction class that doesn't include the ID though. */
+		
+		// If not all fields are filled in (Notes can be left blank), display a notification (use an Alert) and exit this method
+		
+		// Add the new Transaction to the transactionsTable
+				// INSERT INTO "main"."Transactions"("ID","Date","Payee","Category","Note","Amount") VALUES (24,NULL,NULL,NULL,NULL,NULL);
+			// Create SQL Statement
+			String SQLStatement = "INSERT INTO transactions VALUES (" + dbc.highestTransID + ", NULL, NULL, NULL, NULL, NULL)";
+			
+			// Call database setter method with appropriate data and SQL statement
+			dbc.updateDatabase(SQLStatement);
+		
+		// Pull fields from TextFields
+		String date = transDate.getText();
+		String payee = transPayee.getText();
+		String category = transCategory.getText();
+		String note = transNote.getText();
+		double amount = Double.parseDouble(transAmt.getText());
+		
+		// Create a new Transaction object
+//		Transaction transaction = new Transaction(date, payee, category, note, amount);
+		
+		// Add the new Transaction to the database
 
-	// Not sure what the following code was for - doesn't seem to do anything
-//	@FXML
-//	public void onEditCommitSelectedProductTable(CellEditEvent<?,?> event){
-//	    Object newValue = event.getNewValue();
-//	    // other data that might be helpful:
-//	    TablePosition<?,?> position = event.getTablePosition();
-//	    int row = position.getRow();
-//	    // etc ...
-//	    
-//	    System.out.println("It worked!");
-//	}
+	}
 	
 	/**
 	 * Controls the test button. Test button makes sure UI can still communicate with .fxml and Controller files.

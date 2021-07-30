@@ -16,14 +16,7 @@ public class Main extends Application {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
 			Parent root = (Parent)loader.load();
 			
-//			Parent root = FXMLLoader.load(getClass().getResource("Main.fxml"));
-			
 			MainUIController controller = (MainUIController)loader.getController();
-			
-//			controller.transactionsTable.prefWidthProperty().bind(primaryStage.widthProperty());
-//			controller.transactionsTable.prefHeightProperty().bind(primaryStage.heightProperty());
-			
-//			controller.transactionsTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 			
 			primaryStage.setTitle("JFXBudget");
 			primaryStage.setScene(new Scene(root, 1000, 600));

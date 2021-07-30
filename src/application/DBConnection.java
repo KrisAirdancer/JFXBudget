@@ -17,6 +17,8 @@ public class DBConnection {
 	private ObservableList<Transaction> transactions;
 	private ObservableList<Account> accounts;
 	
+	public int highestTransID;
+	
 	/**
 	 * Connects the program to the Dummy.db database.
 	 * 
@@ -37,8 +39,8 @@ public class DBConnection {
 	}
 	
 	/**
-	 * Reads data in from the database, initializes transaction objects with the data, and
-	 * stores the data in an ObservableList.
+	 * Reads all Transactions data in from the database, initializes transaction objects
+	 * with the data, and stores the data in an ObservableList.
 	 * 
 	 * TODO Could be made general by 1) allowing the SQL query to be set by the user and
 	 * 2) having the method return an ObservableList object.
@@ -72,6 +74,9 @@ public class DBConnection {
 				Transaction trans = new Transaction(id, date, payee, category, note, amount);
 				// Add the Transaction object to the transactions Observable List
 				transactions.add(trans);
+				
+				// Update highestTransID variable
+				highestTransID = result.getInt("ID");
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to create Transaction object(s) from database.");
@@ -118,7 +123,7 @@ public class DBConnection {
 	}
 	
 	/**
-	 * Updates data in the Dummy.db database
+	 * Executes an SQL statement on the Dummy.db database.
 	 */
 	public void updateDatabase(String SQLQuery) {
 		

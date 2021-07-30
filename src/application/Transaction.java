@@ -38,6 +38,18 @@ public class Transaction {
 		this.transactionButton = new Button("Edit");
 		
 	}
+	/**
+	 * Overloaded constructor for Transaction class. Does not have ID parameter.
+	 */
+//	public Transaction(String date, String payee, String category, String note, double amount) {
+//		this.date = new SimpleStringProperty(date);
+//		this.payee = new SimpleStringProperty(payee);
+//		this.category = new SimpleStringProperty(category);
+//		this.note = new SimpleStringProperty(note);
+//		this.amount = new SimpleDoubleProperty(amount);
+//		this.transactionButton = new Button("Edit");
+//		
+//	}
 	
     // Define getters for the Properties' values. Note: This allows for a non-Property type to be returned.
     public final int getId() {return id.get();}

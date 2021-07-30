@@ -102,7 +102,7 @@
       </HBox>
       <HBox fillHeight="false" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <children>
-            <Button maxHeight="15.0" maxWidth="100.0" mnemonicParsing="false" text="Add Transaction" />
+            <Button fx:id="addTransButton" maxHeight="15.0" maxWidth="100.0" mnemonicParsing="false" onAction="#addTransaction" text="Add Transaction" />
             <TextField maxHeight="15.0" maxWidth="100.0" promptText="Date" />
             <TextField maxHeight="15.0" maxWidth="100.0" promptText="Payee" />
             <TextField maxHeight="15.0" maxWidth="100.0" promptText="Category" />

@@ -237,53 +237,6 @@ public class MainUIController implements Initializable {
 		transactionsTable.setItems(transactions);
 		
 		/***********************************
-		 * Set up Transactions Table buttons
-		 ***********************************/
-		
-		// Create a Cell Factory
-		Callback<TableColumn<Transaction, Button>, TableCell<Transaction, Button>> TransactionsCellFactory = (param) -> {
-			
-			// Make a TableCell to house the button
-			final TableCell<Transaction, Button> cell = new TableCell<Transaction, Button>() {
-				
-				// Override updateItems method
-				@Override
-				public void updateItem(Button item, boolean empty) {
-					super.updateItem(item, empty);
-					
-					// Ensure that cells are only create in non-empty rows
-					if (empty) {
-						setGraphic(null);
-						setText(null);
-					} else {
-						// Create a button
-						final Button transactionEditButton = new Button("Edit"); // Statement from example video (39:42):https://www.youtube.com/watch?v=gvko7jLPZT0&ab_channel=DanMlayah
-						
-						// Attach listener to button
-						transactionEditButton.setOnAction(event -> { // This controls what happens when the button is clicked
-							
-							// Extract the clicked Transaction object
-							Transaction trans = getTableView().getItems().get(getIndex());
-							
-							System.out.println("You cliked it!");
-						});
-						
-						// Assign the created button to a cell
-						setGraphic(transactionEditButton);
-						setText(null);
-					}
-				}
-				
-			;	
-				
-			};
-			return cell;
-		};
-		
-		// Assign the custom CellFactory to the appropriate TableColumn
-		transactionButtonCol.setCellFactory(TransactionsCellFactory);
-		
-		/***********************************
 		 * Set up Accounts Table buttons
 		 ***********************************/
 		

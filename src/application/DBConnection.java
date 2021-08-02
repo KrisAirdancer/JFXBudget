@@ -76,7 +76,9 @@ public class DBConnection {
 				transactions.add(trans);
 				
 				// Update highestTransID variable
-				highestTransID = result.getInt("ID");
+				if (id > highestTransID) {
+					highestTransID = id;
+				};
 			}
 		} catch (Exception e) {
 			System.out.println("Failed to create Transaction object(s) from database.");

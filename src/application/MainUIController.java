@@ -15,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
@@ -321,21 +322,23 @@ public class MainUIController implements Initializable {
 	 */
 	public void addTransaction() {
 		
-		System.out.println("transButton Working.");
+		System.out.println("transButton Clicked.");
 		
 		/* NOTE: I shouldn't need to set the ID, it should be set automatically when I add a
 		 * new transaction to the DB. I will need to add a new overloaded constructor in the
 		 * transaction class that doesn't include the ID though. */
 		
 		// If not all fields are filled in (Notes can be left blank), display a notification (use an Alert) and exit this method
-		
-		// Add the new Transaction to the transactionsTable
-				// INSERT INTO "main"."Transactions"("ID","Date","Payee","Category","Note","Amount") VALUES (24,NULL,NULL,NULL,NULL,NULL);
-			// Create SQL Statement
-			String SQLStatement = "INSERT INTO transactions VALUES (" + dbc.highestTransID + ", NULL, NULL, NULL, NULL, NULL)";
+		if (transDate.getText() == "" || transPayee.getText() == ""
+				|| transCategory.getText() == "" ||transAmt.getText() == "") {
 			
-			// Call database setter method with appropriate data and SQL statement
-			dbc.updateDatabase(SQLStatement);
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Empty Fields");
+			alert.setContentText("One or more required fields is empty.\nRequired: Date, Payee, Category, and Amount");
+			alert.show();
+			
+			return; // Skip the rest of the method
+		}
 		
 		// Pull fields from TextFields
 		String date = transDate.getText();
@@ -344,11 +347,27 @@ public class MainUIController implements Initializable {
 		String note = transNote.getText();
 		double amount = Double.parseDouble(transAmt.getText());
 		
-		// Create a new Transaction object
-//		Transaction transaction = new Transaction(date, payee, category, note, amount);
+		// Add the new Transaction to the transactionsTable
+			// INSERT INTO "main"."Transactions"("ID","Date","Payee","Category","Note","Amount") VALUES (24,NULL,NULL,NULL,NULL,NULL);
+		// Create SQL Statement - How to do this: https://www.w3schools.com/sql/sql_ref_values.asp
+		String uniqueID = Integer.toString(dbc.highestTransID + 1);
+		String newValues = "'" + uniqueID + "', '" + date + "', '" + payee + "', '" + category + "', '" + note + "', '" + Double.toString(amount) + "'";
+		String SQLStatement = "INSERT INTO transactions (ID, Date, Payee, Category, Note, Amount) VALUES (" + newValues + ")";
 		
-		// Add the new Transaction to the database
-
+		System.out.println(newValues);
+		System.out.println(SQLStatement);
+		
+		// Call database setter method with appropriate data and SQL statement
+		dbc.updateDatabase(SQLStatement);
+		
+		// Create a new Transaction object
+		Transaction transaction = new Transaction(Integer.parseInt(uniqueID), date, payee, category, note, amount);
+		
+		// Add the new Transaction to the database by adding it to the transactions ObservableList
+		transactions.add(transaction);
+		
+		// Update highestTransID in dbc
+		dbc.highestTransID++;
 	}
 	
 	/**

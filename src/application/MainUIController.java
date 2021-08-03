@@ -80,6 +80,8 @@ public class MainUIController implements Initializable {
 	private Button newAcctButton; // New Account button
 	@FXML
 	private Button addTransButton; // Add Transaction button
+	@FXML
+	private Button delTransButton; // Delete Transaction button
 	
 	/*************
 	 * TEXT FIELDS
@@ -318,7 +320,28 @@ public class MainUIController implements Initializable {
 	}	
 	
 	/**
-	 * Controls the Add Transaction button
+	 * Controls the Delete Transaction button which deletes the currently selected transaction
+	 */
+	public void deleteTransaction() {
+		
+		// Get the selected transaction object - if none selected, notify user using an Alert
+		Transaction transaction = transactionsTable.getSelectionModel().getSelectedItem();
+		
+		// Remove the transaction from TableView
+		transactions.remove(transaction);
+		
+		// Remove the transaction from the database
+		int id = transaction.getId();
+		
+		String SQLStatement = "DELETE FROM transactions WHERE ID = " + Integer.toString(id);
+		
+		System.out.println("Statement: " + SQLStatement + ", ID: " + id);
+		
+		dbc.updateDatabase(SQLStatement); // Send query to database
+	}
+	
+	/**
+	 * Controls the Add Transaction button which adds a new transaction
 	 */
 	public void addTransaction() {
 		
@@ -368,6 +391,8 @@ public class MainUIController implements Initializable {
 		
 		// Update highestTransID in dbc
 		dbc.highestTransID++;
+		
+		
 	}
 	
 	/**

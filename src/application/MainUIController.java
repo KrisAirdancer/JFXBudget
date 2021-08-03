@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -90,8 +91,10 @@ public class MainUIController implements Initializable {
 	private TextField acctName;
 	@FXML
 	private TextField acctBal;
+//	@FXML
+//	private TextField transDate;
 	@FXML
-	private TextField transDate;
+	private DatePicker transDate;
 	@FXML
 	private TextField transPayee;
 	@FXML
@@ -351,9 +354,10 @@ public class MainUIController implements Initializable {
 		 * new transaction to the DB. I will need to add a new overloaded constructor in the
 		 * transaction class that doesn't include the ID though. */
 		
+		System.out.println("DatePicker Value: " + transDate.getValue());
+		
 		// If not all fields are filled in (Notes can be left blank), display a notification (use an Alert) and exit this method
-		if (transDate.getText() == "" || transPayee.getText() == ""
-				|| transCategory.getText() == "" ||transAmt.getText() == "") {
+		if (transDate.getValue() == null || transPayee.getText() == "" || transCategory.getText() == "" ||transAmt.getText() == "") {
 			
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Empty Fields");
@@ -363,15 +367,19 @@ public class MainUIController implements Initializable {
 			return; // Skip the rest of the method
 		}
 		
+		// Check that the value entered in the Amount field is a properly formatted double or integer
+//		if () {
+//			
+//		}
+		
 		// Pull fields from TextFields
-		String date = transDate.getText();
+		String date = transDate.getValue().toString();
 		String payee = transPayee.getText();
 		String category = transCategory.getText();
 		String note = transNote.getText();
 		double amount = Double.parseDouble(transAmt.getText());
 		
 		// Add the new Transaction to the transactionsTable
-			// INSERT INTO "main"."Transactions"("ID","Date","Payee","Category","Note","Amount") VALUES (24,NULL,NULL,NULL,NULL,NULL);
 		// Create SQL Statement - How to do this: https://www.w3schools.com/sql/sql_ref_values.asp
 		String uniqueID = Integer.toString(dbc.highestTransID + 1);
 		String newValues = "'" + uniqueID + "', '" + date + "', '" + payee + "', '" + category + "', '" + note + "', '" + Double.toString(amount) + "'";
@@ -390,9 +398,43 @@ public class MainUIController implements Initializable {
 		transactions.add(transaction);
 		
 		// Update highestTransID in dbc
-		dbc.highestTransID++;
+		dbc.highestTransID++;	
+	}
+	
+	/**
+	 * Converts a String to a double value
+	 */
+	public int stringToDouble(String input) {
 		
+		int output = 0;
 		
+		// Loop over the input string - check for valid characters and convert it to a double
+		for (int index = 0; index < input.length(); index++) {
+			
+			char current = input.charAt(index);
+			
+			if (current == '$' && index == 0) {
+				// Do nothing
+			} else if (current == '-') { // Negative number
+				
+			} else if (isNumber(current)) {
+				output = (output * 10) + current;
+			} else {
+				
+			}
+		}
+		
+		return output;
+	}
+	
+	public boolean isNumber(char character) {
+		
+		if (character == '0' || character == '1' || character == '2' || character == '3' ||
+				 character == '4' || character == '5' || character == '6' || character == '7' ||
+				 character == '8' || character == '9') {
+			return true;
+		}
+		return false;
 	}
 	
 	/**
